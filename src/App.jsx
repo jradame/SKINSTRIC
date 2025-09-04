@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
-import GeometricLines from './components/GeometricLines';
 import { skinstricAPI } from './services/apiService';
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
         loading={loading}
         skinData={skinData}
       />
-      <GeometricLines />
     </div>
   );
 }

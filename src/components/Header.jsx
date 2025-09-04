@@ -8,10 +8,11 @@ const Header = () => {
         <div className="text-sm tracking-wider">INTRO</div>
       </div>
       <button className="bg-black text-white px-6 py-2 text-sm tracking-wider hover:bg-gray-800 transition-colors">
-        FULL BLOG
+        Enter Code
       </button>
     </header>
   );
 };
 
 export default Header;
+
