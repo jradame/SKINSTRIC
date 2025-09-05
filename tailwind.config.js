@@ -8,10 +8,13 @@ export default {
     extend: {
       fontFamily: {
         'serif': ['Playfair Display', 'serif'],
+        'roobert': ['RoobertMono', 'monospace'],
       },
     },
   },
   plugins: [],
 }
+
+
 
 
