@@ -12,7 +12,7 @@ const Sidebar = () => {
             alt="button icon" 
             className="w-7 h-7 object-contain" 
           />
-          <span className="text-[10px] text-black tracking-wider font-roobert">DISCOVER ALL</span>
+          <span className="text-[10px] text-black tracking-wider font-roobert font-extralight">DISCOVER ALL</span>
           <FiArrowLeft className="w-4 h-4" />
         </div>
       </div>
@@ -20,7 +20,7 @@ const Sidebar = () => {
       {/* Right Sidebar */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40">
         <div className="flex items-center space-x-3 cursor-pointer hover:opacity-70 transition-opacity">
-          <span className="text-[10px] text-black tracking-wider font-roobert">TIME TEST</span>
+          <span className="text-[10px] text-black tracking-wider font-roobert font-extralight">TIME TEST</span>
           <FiArrowRight className="w-4 h-4" />
         </div>
       </div>
@@ -29,6 +29,7 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
 
 
 
