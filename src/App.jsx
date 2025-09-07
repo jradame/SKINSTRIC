@@ -21,16 +21,17 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative min-h-screen bg-white overflow-hidden">
       <Header />
       <Sidebar />
-      <Hero 
-        onAnalyze={handleAnalyzeSkin} 
-        loading={loading}
-        skinData={skinData}
-      />
+      <Hero onAnalyze={handleAnalyzeSkin} loading={loading} skinData={skinData} />
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
