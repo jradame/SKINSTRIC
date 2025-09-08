@@ -21,19 +21,19 @@ const Hero = () => {
           >
             SKINSTRIC
           </a>
-          <img
+          {/* <img
             src="/_next/static/media/Rectangle%202710.61a74ed4.png"
             alt="left bracket"
             className="w-[4px] h-[17px]"
-          />
+          /> */}
           <p className="text-[#1a1b1c83] font-semibold text-sm ml-1.5 mr-1.5">
-            INTRO
+            [ INTRO ]
           </p>
-          <img
+          {/* <img
             src="/_next/static/media/Rectangle%202711.b2b3b291.png"
             alt="right bracket"
             className="w-[4px] h-[17px]"
-          />
+          /> */}
         </div>
         <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors text-[#FCFCFC] text-[10px] bg-[#1A1B1C] h-9 px-4 py-2 mx-4 scale-[0.8] leading-[16px]">
           ENTER CODE
