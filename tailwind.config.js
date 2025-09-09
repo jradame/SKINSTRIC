@@ -1,21 +1,24 @@
 // tailwind.config.js
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}", // adjust if needed
   ],
   theme: {
     extend: {
+      keyframes: {
+        proceedSlideIn: {
+          "0%": { transform: "translateX(-25%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
+        },
+      },
       animation: {
-        "spin-slow": "spin 20s linear infinite",
-        "spin-slower": "spin 40s linear infinite",
-        "spin-slowest": "spin 60s linear infinite",
+        proceedSlideIn: "proceedSlideIn 0.8s ease-out forwards",
       },
     },
   },
   plugins: [],
 };
+
 
 
 
