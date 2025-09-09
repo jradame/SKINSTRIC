@@ -5,12 +5,24 @@ const Introduce = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
+  const [submissions, setSubmissions] = useState([]); // ✅ track multiple submissions
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (step === 1 && name.trim()) {
+      console.log("Name entered:", name);
       setStep(2);
     } else if (step === 2 && city.trim()) {
+      console.log("City entered:", city);
+      console.log("Full submission:", { name, city });
+
+      // ✅ Push into submissions array
+      setSubmissions((prev) => [...prev, { name, city }]);
+
+      // ✅ Log the array so far
+      console.log("All submissions so far:", [...submissions, { name, city }]);
+
       setStep(3);
     }
   };
@@ -110,34 +122,38 @@ const Introduce = () => {
 
       {/* Bottom Navigation */}
       <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
-        {/* Back Button (same size as Proceed) */}
+        {/* Back Button (unchanged) */}
         <a href="/" className="inset-0" aria-label="Back">
           <div>
-            <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 sm:hidden">
+            <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
               <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">
                 BACK
               </span>
             </div>
             <div className="group hidden sm:flex flex-row relative justify-center items-center">
-              <div className="w-12 h-12 flex justify-center border border-[#1A1B1C] rotate-45 group-hover:scale-105 ease duration-300"></div>
-              <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 group-hover:scale-105 ease duration-300">
+              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+              <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">
                 ▶
               </span>
-              <span className="text-sm font-semibold ml-6">BACK</span>
+              <span className="text-sm font-semibold hidden sm:block ml-6">
+                BACK
+              </span>
             </div>
           </div>
         </a>
 
-        {/* Proceed Button (ONLY appears on step 3, same size as Back) */}
+        {/* Proceed Button (step 3 only) */}
         {step === 3 && (
           <a
             href="/result"
             className="inline-block transform opacity-0 animate-proceedSlideIn"
           >
-            <div className="group flex flex-row relative justify-center items-center">
-              <span className="text-sm font-semibold mr-5">PROCEED</span>
-              <div className="w-12 h-12 flex justify-center border border-[#1A1B1C] rotate-45 group-hover:scale-105 ease duration-300"></div>
-              <span className="absolute right-[15px] bottom-[13px] scale-[0.9] group-hover:scale-105 ease duration-300">
+            <div className="group hidden sm:flex flex-row relative justify-center items-center">
+              <span className="text-sm font-semibold hidden sm:block mr-5">
+                PROCEED
+              </span>
+              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+              <span className="absolute right-[15px] bottom-[13px] scale-[0.9] hidden sm:block group-hover:scale-[0.92] ease duration-300">
                 ▶
               </span>
             </div>
@@ -149,6 +165,7 @@ const Introduce = () => {
 };
 
 export default Introduce;
+
 
 
 

@@ -13,11 +13,15 @@ module.exports = {
       },
       animation: {
         proceedSlideIn: "proceedSlideIn 0.8s ease-out forwards",
+        "spin-slow": "spin 20s linear infinite",
+        "spin-slower": "spin 40s linear infinite",
+        "spin-slowest": "spin 60s linear infinite",
       },
     },
   },
   plugins: [],
 };
+
 
 
 
