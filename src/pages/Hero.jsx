@@ -78,7 +78,8 @@ const Hero = () => {
 
           {/* MOBILE BUTTON */}
           <div className="z-10 mt-4 lg:hidden">
-            <a href="/testing">
+            <a href="/introduce">
+
               <button className="relative flex items-center gap-4 hover:scale-105 duration-300">
                 <span className="text-[12px] font-bold cursor-pointer">
                   ENTER EXPERIENCE
@@ -140,20 +141,21 @@ const Hero = () => {
           >
             <div className="relative w-full h-full">
               <div className="w-full h-full border border-dotted border-[#A0A4AB] rotate-45 absolute inset-0"></div>
-              <a href="/testing">
-                <button
-                  id="take-test-button"
-                  onMouseEnter={() => setSlideDirection("left")}
-                  onMouseLeave={() => setSlideDirection(null)}
-                  className="group inline-flex items-center justify-center gap-4 whitespace-nowrap rounded-md text-sm font-normal cursor-pointer h-9 absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/5 xl:-translate-x-1/6 px-3 py-1"
-                >
-                  TAKE TEST
-                  <div className="w-[30px] h-[30px] border border-solid border-black rotate-45 group-hover:scale-110 duration-300"></div>
-                  <span className="absolute left-[107px] top-[9px] scale-[0.9] cursor-pointer group-hover:scale-105 duration-300">
-                    ▶
-                  </span>
-                </button>
-              </a>
+              <a href="/introduce">
+  <button
+    id="take-test-button"
+    onMouseEnter={() => setSlideDirection("left")}
+    onMouseLeave={() => setSlideDirection(null)}
+    className="group inline-flex items-center justify-center gap-4 whitespace-nowrap rounded-md text-sm font-normal cursor-pointer h-9 absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/5 xl:-translate-x-1/6 px-3 py-1"
+  >
+    TAKE TEST
+    <div className="w-[30px] h-[30px] border border-solid border-black rotate-45 group-hover:scale-110 duration-300"></div>
+    <span className="absolute left-[107px] top-[9px] scale-[0.9] cursor-pointer group-hover:scale-105 duration-300">
+      ▶
+    </span>
+  </button>
+</a>
+
             </div>
           </div>
         </div>
