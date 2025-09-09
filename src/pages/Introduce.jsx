@@ -6,8 +6,9 @@ const Introduce = () => {
     <main className="relative min-h-screen bg-white text-[#1A1B1C] overflow-hidden">
       {/* Header */}
       <header className="flex flex-row h-[64px] w-full justify-between items-start py-3 px-9 fixed top-0 left-0 right-0 z-[1000]">
-        {/* Left Section: SKINSTRIC [ INTRO ] + TO START ANALYSIS inline */}
+        {/* Left Section: SKINSTRIC [ INTRO ] with TO START ANALYSIS aligned */}
         <div className="flex flex-col items-start">
+          {/* Top row */}
           <div className="flex flex-row items-center scale-75">
             <a
               href="/"
@@ -18,8 +19,11 @@ const Introduce = () => {
             <p className="text-[#1a1b1c83] font-semibold text-sm ml-1.5 mr-1.5">
               [ INTRO ]
             </p>
-            <p className="font-bold text-xs ml-4 text-black">TO START ANALYSIS</p>
           </div>
+          {/* Bottom text aligned visually under the row */}
+          <p className="font-bold text-xs mt-1 ml-8 text-black">
+            TO START ANALYSIS
+          </p>
         </div>
 
         {/* Right Section: ENTER CODE */}
@@ -30,7 +34,7 @@ const Introduce = () => {
 
       {/* Center Form */}
       <div className="relative flex flex-col items-center justify-center h-screen">
-        <p className="text-sm text-gray-400 tracking-wider uppercase mb-1 z-10">
+        <p className="text-sm text-gray-400 tracking-wider uppercase mb-1">
           CLICK TO TYPE
         </p>
         <form className="relative z-10">
@@ -69,10 +73,17 @@ const Introduce = () => {
 
       {/* Bottom Back Button */}
       <div className="absolute bottom-8 w-full flex justify-start px-9">
-        <a href="/" className="group flex flex-row items-center gap-2">
-          <div className="w-12 h-12 border border-[#1A1B1C] rotate-45 flex items-center justify-center group-hover:scale-105 transition duration-300">
-            <span className="rotate-[-45deg] text-xs font-semibold">BACK</span>
-          </div>
+        <a href="/" className="group hidden sm:flex flex-row relative justify-center items-center">
+          {/* Diamond Shape */}
+          <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+          {/* Arrow */}
+          <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">
+            ▶
+          </span>
+          {/* Text */}
+          <span className="text-sm font-semibold hidden sm:block ml-6">
+            BACK
+          </span>
         </a>
       </div>
     </main>
@@ -80,6 +91,12 @@ const Introduce = () => {
 };
 
 export default Introduce;
+
+
+
+
+
+
 
 
 
