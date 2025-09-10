@@ -5,25 +5,17 @@ const Introduce = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
-  const [submissions, setSubmissions] = useState([]); // ✅ track multiple submissions
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (step === 1 && name.trim()) {
-      console.log("Name entered:", name);
       setStep(2);
     } else if (step === 2 && city.trim()) {
-      console.log("City entered:", city);
-      console.log("Full submission:", { name, city });
-
-      // ✅ Push into submissions array
-      setSubmissions((prev) => [...prev, { name, city }]);
-
-      // ✅ Log the array so far
-      console.log("All submissions so far:", [...submissions, { name, city }]);
-
+      // Save to localStorage
+      localStorage.setItem("userName", name.trim());
+      localStorage.setItem("userCity", city.trim());
       setStep(3);
+      console.log("Saved to localStorage:", name.trim(), city.trim());
     }
   };
 
@@ -122,7 +114,7 @@ const Introduce = () => {
 
       {/* Bottom Navigation */}
       <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
-        {/* Back Button (unchanged) */}
+        {/* Back Button (untouched) */}
         <a href="/" className="inset-0" aria-label="Back">
           <div>
             <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -165,6 +157,7 @@ const Introduce = () => {
 };
 
 export default Introduce;
+
 
 
 
