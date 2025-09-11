@@ -51,7 +51,6 @@ const Result = () => {
   };
 
   return (
-    // ADD THIS WRAPPER TO OVERRIDE APP.CSS STYLES
     <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
@@ -86,22 +85,26 @@ const Result = () => {
             {/* Main Content */}
             <div className="flex-[0.4] md:flex-1 flex flex-col md:flex-row items-center xl:justify-center relative mb-0 md:mb-30 space-y-[-20px] md:space-y-0">
               
-              {/* Camera Icon - FIXED WITH INLINE STYLES TO OVERRIDE APP.CSS */}
+              {/* Rotating diamonds */}
+              {/* <div style={{ position: 'fixed', top: '200px', left: '412px', width: '600px', height: '600px', zIndex: 10 }}>
+                <img src={largediamond} className="absolute inset-0 w-full h-full animate-spin" />
+                <img src={mediumdiamond} className="absolute inset-0 w-4/5 h-4/5 m-auto animate-spin-slow" />
+                <img src={smalldiamond} className="absolute inset-0 w-3/5 h-3/5 m-auto animate-spin-slower" />
+              </div> */}
+
+              {/* Camera Icon - 600px, moved up */}
               <img 
                 src="/Image/camera-left.svg" 
                 alt="Camera Icon" 
                 style={{
                   position: 'fixed',
-                  top: '413px',
-                  left: '412px',
-                  width: '600px',
-                  height: '600px',
+                  top: '350px',
+                  left: '200px',
+                  width: '300px',
+                  height: '150px',
                   cursor: 'pointer',
-                  zIndex: 10,
-                  transition: 'transform 0.3s ease'
+                  zIndex: 20
                 }}
-                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
                 onClick={() => inputRef.current?.click()}
               />
               
@@ -157,6 +160,8 @@ const Result = () => {
 }
 
 export default Result
+
+
 
 
 
