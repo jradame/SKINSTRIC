@@ -92,14 +92,30 @@ const Result = () => {
                 <img src={smalldiamond} className="absolute inset-0 w-3/5 h-3/5 m-auto animate-spin-slower" />
               </div> */}
 
-              {/* Camera Icon - 600px, moved up */}
+              {/* Camera Icon - Left side */}
               <img 
                 src="/Image/camera-left.svg" 
                 alt="Camera Icon" 
                 style={{
                   position: 'fixed',
                   top: '350px',
-                  left: '200px',
+                  left: '500px',
+                  width: '300px',
+                  height: '150px',
+                  cursor: 'pointer',
+                  zIndex: 20
+                }}
+                onClick={() => inputRef.current?.click()}
+              />
+
+              {/* Gallery Icon - Right side */}
+              <img 
+                src="/Image/gallery-right.svg" 
+                alt="Gallery Icon" 
+                style={{
+                  position: 'fixed',
+                  top: '350px',
+                  right: '500px',
                   width: '300px',
                   height: '150px',
                   cursor: 'pointer',
@@ -160,6 +176,7 @@ const Result = () => {
 }
 
 export default Result
+
 
 
 
