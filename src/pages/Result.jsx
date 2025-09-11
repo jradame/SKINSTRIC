@@ -7,8 +7,6 @@ const rightbracket = "/Image/right-bracket.svg";
 const largediamond = "/Image/diamond-large.svg";
 const mediumdiamond = "/Image/diamond-medium.svg";
 const smalldiamond = "/Image/diamond-small.svg";
-const camera = "/Image/camera-left.svg";
-const galllery = "/Image/gallery-right.svg";
 const scanline = "/Image/scan-line.svg";
 const leftscanline = "/Image/gallery-line.svg";
 
@@ -17,45 +15,6 @@ const Result = () => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [analysisDone, setAnalysisDone] = useState(false);
-  const [showPermissionModal, setShowPermissionModal] = useState(false);
-
-  const handlePick = () => {
-    inputRef.current.click();
-  };
-
-  const handleTakePhoto = async () => {
-    setShowPermissionModal(false);
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-      const video = document.createElement('video');
-      const canvas = document.createElement('canvas');
-      video.srcObject = stream;
-      await video.play();
-      video.onloadedmetadata = () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        setTimeout(() => {
-          canvas.getContext('2d').drawImage(video, 0, 0);
-          const base64 = canvas.toDataURL('image/png');
-          stream.getTracks().forEach(track => track.stop());
-          setPreview(base64);
-          localStorage.setItem('previewImage', base64);
-          sendToAPI(base64);
-        }, 1000);
-      };
-    } catch (err) {
-      console.error('Camera access denied or failed:', err);
-    }
-  };
-
-  const handleAllow = () => {
-    setShowPermissionModal(false);
-    window.location.href = '/camera';
-  };
-
-  const handleDeny = () => {
-    setShowPermissionModal(false);
-  };
 
   const handleChange = (e) => {
     const file = e.target.files[0];
@@ -92,7 +51,8 @@ const Result = () => {
   };
 
   return (
-    <>
+    // ADD THIS WRAPPER TO OVERRIDE APP.CSS STYLES
+    <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
           <p className="text-lg mb-5">Preparing your analysis...</p>
@@ -117,7 +77,7 @@ const Result = () => {
             </button>
           </div>
           
-          <div className={`min-h-[92vh] flex flex-col bg-white relative md:pt-16 justify-center transition-all duration-300 ${showPermissionModal ? 'blur-sm' : ''}`}>
+          <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-16 justify-center transition-all duration-300">
             {/* Title */}
             <div className="absolute top-2 left-9 md:left-8 text-left">
               <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
@@ -126,59 +86,24 @@ const Result = () => {
             {/* Main Content */}
             <div className="flex-[0.4] md:flex-1 flex flex-col md:flex-row items-center xl:justify-center relative mb-0 md:mb-30 space-y-[-20px] md:space-y-0">
               
-              {/* Left Section (Camera) */}
-              <div className="relative md:absolute md:left-[55%] lg:left-[50%] xl:left-[40%] md:-translate-y-0 -translate-y-1 md:-translate-x-full flex flex-col items-center justify-center">
-                <div className="w-[270px] h-[270px] md:w-[482px] md:h-[482px] relative">
-                  <img className="absolute w-full h-full animate-spin-slow" style={{transform: 'rotate(200deg)'}} src={largediamond} alt="Large-Diamond"/>
-                  <img className="absolute w-[230px] h-[230px] md:w-[444px] md:h-[444px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin-slower" style={{transform: 'rotate(190deg) translate(-50%, -50%)'}} src={mediumdiamond} alt="Medium-Diamond"/>
-                  <img className="absolute w-[190px] h-[190px] md:w-[405px] md:h-[405px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin-slowest" src={smalldiamond} alt="Small-Diamond" />
-                  
-                  {/* Camera Icon */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <img 
-                      className="w-[100px] h-[100px] md:w-[136px] md:h-[136px] hover:scale-110 duration-700 ease-in-out cursor-pointer z-10" 
-                      src={camera} 
-                      alt="Camera" 
-                      onClick={() => setShowPermissionModal(true)} 
-                    />
-                  </div>
-                </div>
-                
-                {/* Camera Text */}
-                <div className="absolute bottom-1 right-[90px] md:top-[30.9%] md:right-[-12px] -translate-y-5">
-                  <p className="text-xs md:text-sm font-normal mt-1 leading-6">
-                    ALLOW A.I.<br/>TO SCAN YOUR FACE
-                  </p>
-                  <img className="absolute hidden md:block md:right-36 md:top-5" src={scanline} alt="Scan Line" />
-                </div>
-              </div>
-              
-              {/* Right Section (Gallery) */}
-              <div className="relative md:absolute md:left-[45%] lg:left-[50%] xl:left-[55%] flex flex-col items-center mt-12 md:mt-0 justify-center md:-translate-y-0 -translate-y-10 transition-opacity duration-300 opacity-100">
-                <div className="w-[270px] h-[270px] md:w-[482px] md:h-[482px] relative">
-                  <img className="absolute w-full h-full animate-spin-slow" style={{transform: 'rotate(205deg)'}} src={largediamond} alt="Large-Diamond"/>
-                  <img className="absolute w-[230px] h-[230px] md:w-[444px] md:h-[444px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin-slower" style={{transform: 'rotate(195deg) translate(-50%, -50%)'}} src={mediumdiamond} alt="Medium-Diamond"/>
-                  <img className="absolute w-[190px] h-[190px] md:w-[405px] md:h-[405px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-spin-slowest" src={smalldiamond} alt="Small-Diamond" />
-                  
-                  {/* Gallery Icon */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <img 
-                      className="w-[100px] h-[100px] md:w-[136px] md:h-[136px] hover:scale-110 duration-700 ease-in-out cursor-pointer z-10" 
-                      src={galllery} 
-                      alt="Gallery" 
-                      onClick={handlePick}
-                    />
-                  </div>
-                </div>
-                
-                {/* Gallery Text */}
-                <div className="absolute top-3/4 md:top-[70%] md:left-4 -translate-y-10">
-                  <p className="text-xs md:text-sm font-normal mt-2 leading-6 text-right">
-                    ALLOW A.I.<br/>ACCESS GALLERY
-                  </p>
-                  <img className="absolute hidden md:block md:left-30 md:bottom-10" src={leftscanline} alt="Gallery Line" />
-                </div>
-              </div>
+              {/* Camera Icon - FIXED WITH INLINE STYLES TO OVERRIDE APP.CSS */}
+              <img 
+                src="/Image/camera-left.svg" 
+                alt="Camera Icon" 
+                style={{
+                  position: 'fixed',
+                  top: '413px',
+                  left: '412px',
+                  width: '600px',
+                  height: '600px',
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                onClick={() => inputRef.current?.click()}
+              />
               
               {/* Preview Box */}
               <div className="absolute top-[-75px] right-7 md:top-[-50px] md:right-8 transition-opacity duration-300 opacity-100">
@@ -227,36 +152,15 @@ const Result = () => {
           </div>
         </>
       )}
-      
-      {/* Permission Modal */}
-      {showPermissionModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-[999]">
-          <div className="bg-[#1A1B1C] pt-4 pb-2">
-            <h2 className="text-[#FCFCFC] text-base font-semibold mb-12 leading-6 px-4">
-              ALLOW A.I. TO ACCESS YOUR CAMERA.
-            </h2>
-            <div className="flex mt-4 border-t border-[#FCFCFC] pt-2">
-              <button 
-                onClick={handleDeny} 
-                className="bg-[#1A1B1C] px-7 transform translate-x-11 text-[#fcfcfca1] font-normal text-sm leading-4 cursor-pointer"
-              >
-                Deny
-              </button>
-              <button 
-                onClick={handleAllow} 
-                className="bg-[#1A1B1C] px-5 transform translate-x-11 text-[#fcfcfc] font-semibold text-sm leading-4 cursor-pointer"
-              >
-                Allow
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   )
 }
 
 export default Result
+
+
+
+
 
 
 
