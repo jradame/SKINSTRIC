@@ -7,11 +7,10 @@ const rightbracket = "/Image/right-bracket.svg";
 const largediamond = "/Image/diamond-large.svg";
 const mediumdiamond = "/Image/diamond-medium.svg";
 const smalldiamond = "/Image/diamond-small.svg";
-const scanline = "/Image/scan-line.svg";
-const leftscanline = "/Image/gallery-line.svg";
 
 const Result = () => {
-  const inputRef = useRef(null);
+  const cameraInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [analysisDone, setAnalysisDone] = useState(false);
@@ -32,11 +31,12 @@ const Result = () => {
 
   const sendToAPI = async (base64) => {
     try {
-      const res = await axios.post('https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo', {image:base64});
-      console.log('Full API response:', res.data); 
+      const res = await axios.post(
+        'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
+        { image: base64 }
+      );
       const { age, gender, race } = res.data.data;
       localStorage.setItem('analysisResult', JSON.stringify({ age, gender, race }));
-      console.log('Analysis Result:', { age, gender, race });
       setAnalysisDone(true);
     } catch (err) {
       console.error('Analysis failed:', err);
@@ -75,55 +75,32 @@ const Result = () => {
               ENTER CODE
             </button>
           </div>
-          
+
           <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-16 justify-center transition-all duration-300">
             {/* Title */}
             <div className="absolute top-2 left-9 md:left-8 text-left">
               <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
             </div>
-          
+
             {/* Main Content */}
-            <div className="flex-[0.4] md:flex-1 flex flex-col md:flex-row items-center xl:justify-center relative mb-0 md:mb-30 space-y-[-20px] md:space-y-0">
+            <div className="flex-[0.4] md:flex-1 flex flex-col items-center xl:justify-center relative mb-0 md:mb-30">
               
-              {/* Rotating diamonds */}
-              {/* <div style={{ position: 'fixed', top: '200px', left: '412px', width: '600px', height: '600px', zIndex: 10 }}>
-                <img src={largediamond} className="absolute inset-0 w-full h-full animate-spin" />
-                <img src={mediumdiamond} className="absolute inset-0 w-4/5 h-4/5 m-auto animate-spin-slow" />
-                <img src={smalldiamond} className="absolute inset-0 w-3/5 h-3/5 m-auto animate-spin-slower" />
-              </div> */}
+              {/* Camera + Gallery icons in one flex row, custom gap */}
+              <div className="flex justify-center items-center gap-[330px] absolute top-[240px] w-full z-20">
+                <img 
+                  src="/Image/camera-left.svg" 
+                  alt="Camera Icon" 
+                  className="w-[300px] h-[150px] cursor-pointer"
+                  onClick={() => cameraInputRef.current?.click()}
+                />
+                <img 
+                  src="/Image/gallery-right.svg" 
+                  alt="Gallery Icon" 
+                  className="w-[300px] h-[150px] cursor-pointer"
+                  onClick={() => galleryInputRef.current?.click()}
+                />
+              </div>
 
-              {/* Camera Icon - Left side */}
-              <img 
-                src="/Image/camera-left.svg" 
-                alt="Camera Icon" 
-                style={{
-                  position: 'fixed',
-                  top: '350px',
-                  left: '500px',
-                  width: '300px',
-                  height: '150px',
-                  cursor: 'pointer',
-                  zIndex: 20
-                }}
-                onClick={() => inputRef.current?.click()}
-              />
-
-              {/* Gallery Icon - Right side */}
-              <img 
-                src="/Image/gallery-right.svg" 
-                alt="Gallery Icon" 
-                style={{
-                  position: 'fixed',
-                  top: '350px',
-                  right: '500px',
-                  width: '300px',
-                  height: '150px',
-                  cursor: 'pointer',
-                  zIndex: 20
-                }}
-                onClick={() => inputRef.current?.click()}
-              />
-              
               {/* Preview Box */}
               <div className="absolute top-[-75px] right-7 md:top-[-50px] md:right-8 transition-opacity duration-300 opacity-100">
                 <h1 className="text-xs md:text-sm font-normal mb-1">Preview</h1>
@@ -131,10 +108,25 @@ const Result = () => {
                   {preview && <img src={preview} alt="Preview" className="w-full h-full object-cover" />}
                 </div>
               </div>
-              
-              <input ref={inputRef} accept="image/*" className="hidden" type="file" onChange={handleChange} />
+
+              {/* Hidden Inputs */}
+              <input
+                ref={cameraInputRef}
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                type="file"
+                onChange={handleChange}
+              />
+              <input
+                ref={galleryInputRef}
+                accept="image/*"
+                className="hidden"
+                type="file"
+                onChange={handleChange}
+              />
             </div>
-            
+
             {/* Back Button */}
             <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
               <a className="relative" href="/testing">
@@ -153,7 +145,7 @@ const Result = () => {
           </div>
         </div>
       )}
-      
+
       {/* Analysis Success Modal */}
       {analysisDone && (
         <>
@@ -176,6 +168,13 @@ const Result = () => {
 }
 
 export default Result
+
+
+
+
+
+
+
 
 
 
