@@ -88,28 +88,37 @@ const Result = () => {
               {/* Camera + Gallery icons */}
               <div className="flex justify-center items-center gap-[300px] absolute top-[240px] w-full z-20">
                 
-                {/* Camera section */}
-                <div className="relative flex flex-col items-center">
-                  <img 
-                    src="/Image/camera-left.svg" 
-                    alt="Camera Icon" 
-                    className="w-[300px] h-[150px] cursor-pointer"
-                    onClick={() => cameraInputRef.current?.click()}
-                  />
-                  {/* Scan line + Text */}
-                  <div className="absolute top-[40%] right-[-110px] flex items-center">
-                    <img 
-                      src="/Image/scan-line.svg" 
-                      alt="Scan Line" 
-                      className="w-[80px] h-auto"
-                    />
-                    <p className="ml-2 text-xs md:text-sm font-normal leading-[20px] text-left">
-                      ALLOW A.I.<br/>TO SCAN YOUR FACE
-                    </p>
-                  </div>
-                </div>
+{/* Camera section */}
+<div className="relative flex flex-col items-center">
+  <img 
+    src="/Image/camera-left.svg" 
+    alt="Camera Icon" 
+    className="w-[300px] h-[150px] cursor-pointer"
+    onClick={() => cameraInputRef.current?.click()}
+  />
 
-                {/* Gallery section */}
+  {/* Text + Scan Line */}
+  <div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
+    {/* Text ABOVE the angled line - MOVED TO THE RIGHT */}
+    <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[24px] translate-x-[80px]">
+      <p className="-translate-x-[34px]">ALLOW A.I.</p>
+      <p>TO SCAN YOUR FACE</p>
+    </div>
+
+
+    {/* Angled scan line touching the camera */}
+    <img 
+      src="/Image/scan-line.svg" 
+      alt="Scan Line" 
+      className="w-[60px] h-auto translate-y-[12px]"
+    />
+  </div>
+</div>
+
+
+
+
+                {/* Gallery section (unchanged for now) */}
                 <div className="relative flex flex-col items-center">
                   <img 
                     src="/Image/gallery-right.svg" 
@@ -117,17 +126,6 @@ const Result = () => {
                     className="w-[300px] h-[150px] cursor-pointer"
                     onClick={() => galleryInputRef.current?.click()}
                   />
-                  {/* Scan line + Text */}
-                  <div className="absolute top-[40%] left-[-110px] flex items-center">
-                    <p className="mr-2 text-xs md:text-sm font-normal leading-[20px] text-right">
-                      ALLOW A.I.<br/>ACCESS GALLERY
-                    </p>
-                    <img 
-                      src="/Image/gallery-line.svg" 
-                      alt="Gallery Line" 
-                      className="w-[80px] h-auto"
-                    />
-                  </div>
                 </div>
               </div>
 
@@ -198,6 +196,9 @@ const Result = () => {
 }
 
 export default Result
+
+
+
 
 
 
