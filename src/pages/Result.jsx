@@ -99,29 +99,46 @@ const Result = () => {
                     className="w-[300px] h-[150px] cursor-pointer"
                     onClick={() => cameraInputRef.current?.click()}
                   />
-{/* Camera Text + Scan Line */}
-<div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
-  <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[40px] translate-x-[100px]">
-    <p className="-translate-x-[34px]">ALLOW A.I.</p>
-    <p>TO SCAN YOUR FACE</p>
-  </div>
-                    <img 
-                      src="/Image/scan-line.svg" 
-                      alt="Scan Line" 
-                      className="w-[60px] h-auto translate-y-[12px]"
-                    />
+
+                  {/* Camera Text + Scan Line */}
+                  <div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
+                    <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[40px] translate-x-[100px]">
+                      <p className="-translate-x-[34px]">ALLOW A.I.</p>
+                      <p>TO SCAN YOUR FACE</p>
+                    </div>
+                   <img 
+  src="/Image/scanline.svg" 
+  alt="Scan Line" 
+  className="w-[60px] h-auto translate-y-[12px] rotate-180"
+/>
+
                   </div>
                 </div>
 
-                {/* Gallery Section */}
-                <div className="relative flex flex-col items-center">
-                  <img 
-                    src="/Image/gallery-right.svg" 
-                    alt="Gallery Icon" 
-                    className="w-[300px] h-[150px] cursor-pointer"
-                    onClick={() => galleryInputRef.current?.click()}
-                  />
-                </div>
+      {/* Gallery Section */}
+<div className="relative flex flex-col items-center">
+  <img 
+    src="/Image/gallery-right.svg" 
+    alt="Gallery Icon" 
+    className="w-[300px] h-[150px] cursor-pointer"
+    onClick={() => galleryInputRef.current?.click()}
+  />
+
+  {/* Gallery Text + Line */}
+  <div className="absolute bottom-[-20px] left-[-40px] flex flex-col items-start">
+    <div className="text-xs md:text-sm font-normal leading-[20px] text-left">
+      <p className="mb-1 translate-x-[20px] translate-y-[92px]">ALLOW A.I.</p>
+      <p className="translate-x-[-28px] translate-y-[88px]">ACCESS GALLERY</p>
+    </div>
+    <img 
+      src="/Image/gallery-line.svg" 
+      alt="Gallery Line" 
+      className="w-[60px] h-auto translate-x-[88px] translate-y-[8px]"
+    />
+  </div>
+</div>
+
+
               </div>
 
               {/* Preview Box */}
@@ -191,6 +208,7 @@ const Result = () => {
 }
 
 export default Result
+
 
 
 
