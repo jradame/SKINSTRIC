@@ -1,54 +1,54 @@
 import React, { useRef, useState } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 
 // Direct paths to public/Image/ folder
-const leftbracket = "/Image/left-bracket.svg";
-const rightbracket = "/Image/right-bracket.svg";
-const largediamond = "/Image/diamond-large.svg";
-const mediumdiamond = "/Image/diamond-medium.svg";
-const smalldiamond = "/Image/diamond-small.svg";
+const leftbracket = "/Image/left-bracket.svg"
+const rightbracket = "/Image/right-bracket.svg"
+const largediamond = "/Image/diamond-large.svg"
+const mediumdiamond = "/Image/diamond-medium.svg"
+const smalldiamond = "/Image/diamond-small.svg"
 
 const Result = () => {
-  const cameraInputRef = useRef(null);
-  const galleryInputRef = useRef(null);
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [analysisDone, setAnalysisDone] = useState(false);
+  const cameraInputRef = useRef(null)
+  const galleryInputRef = useRef(null)
+  const [preview, setPreview] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [analysisDone, setAnalysisDone] = useState(false)
 
   const handleChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setLoading(true);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const file = e.target.files[0]
+    if (!file) return
+    setLoading(true)
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
     reader.onloadend = async () => {
-      const base64 = reader.result;
-      localStorage.setItem('previewImage', base64);
-      setPreview(base64);
-      sendToAPI(base64);
-    };
-  };
+      const base64 = reader.result
+      localStorage.setItem('previewImage', base64)
+      setPreview(base64)
+      sendToAPI(base64)
+    }
+  }
 
   const sendToAPI = async (base64) => {
     try {
       const res = await axios.post(
         'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
         { image: base64 }
-      );
-      const { age, gender, race } = res.data.data;
-      localStorage.setItem('analysisResult', JSON.stringify({ age, gender, race }));
-      setAnalysisDone(true);
+      )
+      const { age, gender, race } = res.data.data
+      localStorage.setItem('analysisResult', JSON.stringify({ age, gender, race }))
+      setAnalysisDone(true)
     } catch (err) {
-      console.error('Analysis failed:', err);
+      console.error('Analysis failed:', err)
     }
     setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+      setLoading(false)
+    }, 1000)
+  }
 
   const handleOkClick = () => {
-    window.location.href = '/select';
-  };
+    window.location.href = '/select'
+  }
 
   return (
     <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
@@ -64,7 +64,10 @@ const Result = () => {
           {/* Header */}
           <div className="flex flex-row h-16 w-full justify-between py-3 mb-3 relative z-[1000]">
             <div className="flex flex-row pt-1 scale-75 justify-center items-center">
-              <a className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-4 text-[#1A1B1C]" href="/">
+              <a 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-4 text-[#1A1B1C]" 
+                href="/"
+              >
                 SKINSTRIC
               </a>
               <img className="w-1 h-4" src={leftbracket} alt="" />
@@ -85,40 +88,32 @@ const Result = () => {
             {/* Main Content */}
             <div className="flex-[0.4] md:flex-1 flex flex-col items-center xl:justify-center relative mb-0 md:mb-30">
               
-              {/* Camera + Gallery icons */}
+              {/* Camera + Gallery Icons */}
               <div className="flex justify-center items-center gap-[300px] absolute top-[240px] w-full z-20">
                 
-{/* Camera section */}
-<div className="relative flex flex-col items-center">
-  <img 
-    src="/Image/camera-left.svg" 
-    alt="Camera Icon" 
-    className="w-[300px] h-[150px] cursor-pointer"
-    onClick={() => cameraInputRef.current?.click()}
-  />
-
-  {/* Text + Scan Line */}
-  <div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
-    {/* Text ABOVE the angled line - MOVED TO THE RIGHT */}
-    <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[24px] translate-x-[80px]">
-      <p className="-translate-x-[34px]">ALLOW A.I.</p>
-      <p>TO SCAN YOUR FACE</p>
-    </div>
-
-
-    {/* Angled scan line touching the camera */}
-    <img 
-      src="/Image/scan-line.svg" 
-      alt="Scan Line" 
-      className="w-[60px] h-auto translate-y-[12px]"
-    />
+                {/* Camera Section */}
+                <div className="relative flex flex-col items-center">
+                  <img 
+                    src="/Image/camera-left.svg" 
+                    alt="Camera Icon" 
+                    className="w-[300px] h-[150px] cursor-pointer"
+                    onClick={() => cameraInputRef.current?.click()}
+                  />
+{/* Camera Text + Scan Line */}
+<div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
+  <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[40px] translate-x-[100px]">
+    <p className="-translate-x-[34px]">ALLOW A.I.</p>
+    <p>TO SCAN YOUR FACE</p>
   </div>
-</div>
+                    <img 
+                      src="/Image/scan-line.svg" 
+                      alt="Scan Line" 
+                      className="w-[60px] h-auto translate-y-[12px]"
+                    />
+                  </div>
+                </div>
 
-
-
-
-                {/* Gallery section (unchanged for now) */}
+                {/* Gallery Section */}
                 <div className="relative flex flex-col items-center">
                   <img 
                     src="/Image/gallery-right.svg" 
@@ -137,7 +132,7 @@ const Result = () => {
                 </div>
               </div>
 
-              {/* Hidden Inputs */}
+              {/* Hidden File Inputs */}
               <input
                 ref={cameraInputRef}
                 accept="image/*"
@@ -196,6 +191,7 @@ const Result = () => {
 }
 
 export default Result
+
 
 
 
