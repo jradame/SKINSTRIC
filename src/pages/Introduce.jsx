@@ -92,25 +92,26 @@ const Introduce = () => {
           </div>
         )}
 
-        {/* Spinning Diamonds */}
-        <div className="absolute inset-0 flex items-center justify-center z-0">
-          <img
-            src="/Image/diamond-large.svg"
-            alt="Diamond Large"
-            className="absolute w-[480px] h-[480px] md:w-[762px] md:h-[762px] animate-spin-slow"
-          />
-          <img
-            src="/Image/diamond-medium.svg"
-            alt="Diamond Medium"
-            className="absolute w-[400px] h-[400px] md:w-[682px] md:h-[682px] animate-spin-slower"
-          />
-          <img
-            src="/Image/diamond-small.svg"
-            alt="Diamond Small"
-            className="absolute w-[320px] h-[320px] md:w-[602px] md:h-[602px] animate-spin-slowest"
-          />
-        </div>
-      </div>
+       {/* Spinning Diamonds */}
+<div className="absolute inset-0 flex items-center justify-center z-0">
+  <img
+    src="/Image/diamond-large.svg"
+    alt="Diamond Large"
+    className="absolute w-[480px] h-[480px] md:w-[762px] md:h-[762px] animate-spin-slow"
+  />
+  <img
+    src="/Image/diamond-medium.svg"
+    alt="Diamond Medium"
+    className="absolute w-[400px] h-[400px] md:w-[682px] md:h-[682px] animate-spin-slower"
+  />
+  <img
+    src="/Image/diamond-small.svg"
+    alt="Diamond Small"
+    className="absolute w-[320px] h-[320px] md:w-[602px] md:h-[602px] animate-spin-slowest"
+  />
+</div>
+</div>
+
 
       {/* Bottom Navigation */}
       <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">

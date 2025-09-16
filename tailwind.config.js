@@ -1,7 +1,7 @@
 // tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // adjust if needed
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -17,6 +17,24 @@ module.exports = {
         "spin-slower": "spin 40s linear infinite",
         "spin-slowest": "spin 60s linear infinite",
       },
+      brightness: {
+        15: '.15',
+        20: '.20',
+        25: '.25',
+        30: '.30',
+      },
+      width: {
+        '640': '640px',
+        '700': '700px',
+        '720': '720px',
+        '800': '800px',
+      },
+      height: {
+        '640': '640px',
+        '700': '700px',
+        '720': '720px',
+        '800': '800px',
+      }
     },
   },
   plugins: [],

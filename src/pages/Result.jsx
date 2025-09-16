@@ -50,6 +50,57 @@ const Result = () => {
     window.location.href = '/select'
   }
 
+  // Diamond Background Component
+  const DiamondBackground = () => (
+    <div className="absolute inset-0 flex items-center justify-center -z-10">
+      <div 
+        className="absolute animate-spin-slow bg-black opacity-90"
+        style={{ 
+          width: '500px', 
+          height: '500px',
+          maskImage: `url(${largediamond})`,
+          WebkitMaskImage: `url(${largediamond})`,
+          maskSize: 'contain',
+          WebkitMaskSize: 'contain',
+          maskRepeat: 'no-repeat',
+          WebkitMaskRepeat: 'no-repeat',
+          maskPosition: 'center',
+          WebkitMaskPosition: 'center'
+        }}
+      />
+      <div 
+        className="absolute animate-spin-slower bg-black opacity-90"
+        style={{ 
+          width: '450px', 
+          height: '450px',
+          maskImage: `url(${mediumdiamond})`,
+          WebkitMaskImage: `url(${mediumdiamond})`,
+          maskSize: 'contain',
+          WebkitMaskSize: 'contain',
+          maskRepeat: 'no-repeat',
+          WebkitMaskRepeat: 'no-repeat',
+          maskPosition: 'center',
+          WebkitMaskPosition: 'center'
+        }}
+      />
+      <div 
+        className="absolute animate-spin-slowest bg-black opacity-90"
+        style={{ 
+          width: '400px', 
+          height: '400px',
+          maskImage: `url(${smalldiamond})`,
+          WebkitMaskImage: `url(${smalldiamond})`,
+          maskSize: 'contain',
+          WebkitMaskSize: 'contain',
+          maskRepeat: 'no-repeat',
+          WebkitMaskRepeat: 'no-repeat',
+          maskPosition: 'center',
+          WebkitMaskPosition: 'center'
+        }}
+      />
+    </div>
+  )
+
   return (
     <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
       {loading ? (
@@ -93,6 +144,8 @@ const Result = () => {
                 
                 {/* Camera Section */}
                 <div className="relative flex flex-col items-center">
+                  <DiamondBackground />
+                  
                   <img 
                     src="/Image/camera-left.svg" 
                     alt="Camera Icon" 
@@ -106,39 +159,38 @@ const Result = () => {
                       <p className="-translate-x-[34px]">ALLOW A.I.</p>
                       <p>TO SCAN YOUR FACE</p>
                     </div>
-                   <img 
-  src="/Image/scanline.svg" 
-  alt="Scan Line" 
-  className="w-[60px] h-auto translate-y-[12px] rotate-180"
-/>
-
+                    <img 
+                      src="/Image/scanline.svg" 
+                      alt="Scan Line" 
+                      className="w-[60px] h-auto translate-y-[12px] rotate-180"
+                    />
                   </div>
                 </div>
 
-      {/* Gallery Section */}
-<div className="relative flex flex-col items-center">
-  <img 
-    src="/Image/gallery-right.svg" 
-    alt="Gallery Icon" 
-    className="w-[300px] h-[150px] cursor-pointer"
-    onClick={() => galleryInputRef.current?.click()}
-  />
+                {/* Gallery Section */}
+                <div className="relative flex flex-col items-center">
+                  <DiamondBackground />
+                  
+                  <img 
+                    src="/Image/gallery-right.svg" 
+                    alt="Gallery Icon" 
+                    className="w-[300px] h-[150px] cursor-pointer"
+                    onClick={() => galleryInputRef.current?.click()}
+                  />
 
-  {/* Gallery Text + Line */}
-  <div className="absolute bottom-[-20px] left-[-40px] flex flex-col items-start">
-    <div className="text-xs md:text-sm font-normal leading-[20px] text-left">
-      <p className="mb-1 translate-x-[20px] translate-y-[92px]">ALLOW A.I.</p>
-      <p className="translate-x-[-28px] translate-y-[88px]">ACCESS GALLERY</p>
-    </div>
-    <img 
-      src="/Image/gallery-line.svg" 
-      alt="Gallery Line" 
-      className="w-[60px] h-auto translate-x-[88px] translate-y-[8px]"
-    />
-  </div>
-</div>
-
-
+                  {/* Gallery Text + Line */}
+                  <div className="absolute bottom-[-20px] left-[-40px] flex flex-col items-start">
+                    <div className="text-xs md:text-sm font-normal leading-[20px] text-left">
+                      <p className="mb-1 translate-x-[20px] translate-y-[92px]">ALLOW A.I.</p>
+                      <p className="translate-x-[-28px] translate-y-[88px]">ACCESS GALLERY</p>
+                    </div>
+                    <img 
+                      src="/Image/gallery-line.svg" 
+                      alt="Gallery Line" 
+                      className="w-[60px] h-auto translate-x-[88px] translate-y-[8px]"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Preview Box */}
@@ -208,6 +260,9 @@ const Result = () => {
 }
 
 export default Result
+
+
+
 
 
 
