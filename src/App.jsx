@@ -1,22 +1,24 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Hero from "./pages/Hero";
-import Introduce from "./pages/Introduce";
-import Result from "./pages/Result"; // NEW
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Hero from './pages/Hero'
+import Introduce from './pages/Introduce'
+import Result from './pages/Result'
+import Demographics from './pages/Demographics'  // Add this import
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<Hero />} />
         <Route path="/introduce" element={<Introduce />} />
-        <Route path="/result" element={<Result />} /> {/* NEW */}
+        <Route path="/result" element={<Result />} />
+        <Route path="/demographic" element={<Demographics />} />  {/* Add this route */}
       </Routes>
-    </BrowserRouter>
-  );
+    </Router>
+  )
 }
 
-export default App;
+export default App
+
 
 
 

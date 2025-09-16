@@ -13,8 +13,26 @@ const Result = () => {
   const galleryInputRef = useRef(null)
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [analysisDone, setAnalysisDone] = useState(false)
+  const [showCameraPopup, setShowCameraPopup] = useState(false)
 
+  // Handle camera icon click - show custom popup
+  const handleCameraClick = () => {
+    setShowCameraPopup(true)
+  }
+
+  // Handle custom popup "ALLOW" click - use file picker for now
+  const handleAllowCamera = () => {
+    setShowCameraPopup(false)
+    // Open file picker directly
+    cameraInputRef.current?.click()
+  }
+
+  // Handle custom popup "DENY" click
+  const handleDenyCamera = () => {
+    setShowCameraPopup(false)
+  }
+
+  // Handle file input change (for both camera and gallery)
   const handleChange = (e) => {
     const file = e.target.files[0]
     if (!file) return
@@ -25,29 +43,67 @@ const Result = () => {
       const base64 = reader.result
       localStorage.setItem('previewImage', base64)
       setPreview(base64)
-      sendToAPI(base64)
+      await sendToAPI(base64)
     }
   }
 
   const sendToAPI = async (base64) => {
     try {
-      const res = await axios.post(
-        'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
-        { image: base64 }
+      console.log('Sending image to API...')
+      
+      const response = await axios.post(
+        'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
+        { 
+          image: base64 
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 30000
+        }
       )
-      const { age, gender, race } = res.data.data
-      localStorage.setItem('analysisResult', JSON.stringify({ age, gender, race }))
-      setAnalysisDone(true)
-    } catch (err) {
-      console.error('Analysis failed:', err)
-    }
-    setTimeout(() => {
+      
+      console.log('API Response:', response.data)
+      
+      // Check if API call was successful
+      if (response.data && response.data.message && response.data.message.includes("SUCCESS")) {
+        // Extract demographic data from the response
+        const demographicData = {
+          race: response.data.data.race,
+          age: response.data.data.age,
+          gender: response.data.data.gender
+        }
+        
+        console.log('Demographic Analysis:', demographicData)
+        
+        // Store the complete analysis result
+        localStorage.setItem('analysisResult', JSON.stringify(demographicData))
+        
+        // Redirect to demographic page
+        window.location.href = '/demographic'
+        
+      } else {
+        throw new Error('API did not return success message')
+      }
+      
+    } catch (error) {
+      console.error('Analysis failed:', error)
+      
+      // Handle different types of errors
+      if (error.code === 'ECONNABORTED') {
+        alert('Request timed out. Please try again with a smaller image.')
+      } else if (error.response) {
+        console.error('Server Error:', error.response.status, error.response.data)
+        alert(`API Error: ${error.response.status}. Please try again.`)
+      } else if (error.request) {
+        console.error('Network Error:', error.request)
+        alert('Network error. Please check your internet connection.')
+      } else {
+        alert('Failed to analyze image. Please try again.')
+      }
       setLoading(false)
-    }, 1000)
-  }
-
-  const handleOkClick = () => {
-    window.location.href = '/select'
+    }
   }
 
   // Diamond Background Component
@@ -105,7 +161,8 @@ const Result = () => {
     <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
-          <p className="text-lg mb-5">Preparing your analysis...</p>
+          <p className="text-lg mb-5">Analyzing your image...</p>
+          <p className="text-sm text-gray-500 mb-5">This may take a few moments</p>
           <img src={largediamond} alt="Large-Diamond" className="animate-spin-slow" />
           <img src={mediumdiamond} alt="Medium-Diamond" className="animate-spin-slower absolute" />
           <img src={smalldiamond} alt="Small-Diamond" className="animate-spin-slowest absolute" />
@@ -150,7 +207,7 @@ const Result = () => {
                     src="/Image/camera-left.svg" 
                     alt="Camera Icon" 
                     className="w-[300px] h-[150px] cursor-pointer"
-                    onClick={() => cameraInputRef.current?.click()}
+                    onClick={handleCameraClick}
                   />
 
                   {/* Camera Text + Scan Line */}
@@ -205,7 +262,6 @@ const Result = () => {
               <input
                 ref={cameraInputRef}
                 accept="image/*"
-                capture="environment"
                 className="hidden"
                 type="file"
                 onChange={handleChange}
@@ -221,13 +277,13 @@ const Result = () => {
 
             {/* Back Button */}
             <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
-              <a className="relative" href="/testing">
+              <a className="relative" href="/introduce">
                 <div>
                   <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-100 sm:hidden">
                     <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
                   </div>
                   <div className="group hidden sm:flex flex-row relative justify-center items-center">
-                    <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-85 group-hover:scale-92 ease duration-300"></div>
+                    <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-85 group-hover:scale-92 ease duration-300" />
                     <span className="absolute left-4 bottom-3 scale-90 rotate-180 hidden sm:block group-hover:scale-92 ease duration-300">▶</span>
                     <span className="text-sm font-semibold hidden sm:block ml-6">BACK</span>
                   </div>
@@ -238,19 +294,28 @@ const Result = () => {
         </div>
       )}
 
-      {/* Analysis Success Modal */}
-      {analysisDone && (
+      {/* Custom Camera Permission Popup */}
+      {showCameraPopup && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-[998]" />
-          <div className="fixed inset-0 flex items-center justify-center z-[999]">
-            <div className="bg-[#1A1B1C] p-6 rounded-lg">
-              <p className="text-white mb-4">Image analyzed successfully!</p>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
+          <div className="fixed inset-0 flex items-center justify-center z-[9999]">
+            <div className="relative">
+              <img 
+                src="/Image/float-info.svg" 
+                alt="Camera Permission" 
+                className="w-auto h-auto"
+              />
+              {/* Invisible clickable areas over ALLOW and DENY */}
               <button 
-                onClick={handleOkClick}
-                className="bg-white text-[#1A1B1C] px-4 py-2 rounded hover:bg-gray-100 transition-colors"
-              >
-                OK
-              </button>
+                onClick={handleAllowCamera}
+                className="absolute bottom-4 right-8 w-20 h-8 bg-transparent hover:bg-white hover:bg-opacity-10 rounded"
+                aria-label="Allow camera access"
+              />
+              <button 
+                onClick={handleDenyCamera}
+                className="absolute bottom-4 left-8 w-16 h-8 bg-transparent hover:bg-white hover:bg-opacity-10 rounded"
+                aria-label="Deny camera access"
+              />
             </div>
           </div>
         </>
@@ -260,6 +325,9 @@ const Result = () => {
 }
 
 export default Result
+
+
+
 
 
 
