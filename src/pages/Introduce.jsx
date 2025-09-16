@@ -1,23 +1,22 @@
-// src/pages/Introduce.jsx
-import React, { useState } from "react";
+import React, { useState } from "react"
 
 const Introduce = () => {
-  const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
+  const [step, setStep] = useState(1)
+  const [name, setName] = useState("")
+  const [city, setCity] = useState("")
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (step === 1 && name.trim()) {
-      setStep(2);
+      setStep(2)
     } else if (step === 2 && city.trim()) {
       // Save to localStorage
-      localStorage.setItem("userName", name.trim());
-      localStorage.setItem("userCity", city.trim());
-      setStep(3);
-      console.log("Saved to localStorage:", name.trim(), city.trim());
+      localStorage.setItem("userName", name.trim())
+      localStorage.setItem("userCity", city.trim())
+      setStep(3)
+      console.log("Saved to localStorage:", name.trim(), city.trim())
     }
-  };
+  }
 
   return (
     <main className="relative min-h-screen bg-white text-[#1A1B1C] overflow-hidden">
@@ -88,34 +87,33 @@ const Introduce = () => {
             <p className="text-2xl font-normal text-[#1A1B1C] tracking-wide">
               Thank you!
             </p>
-            <p className="text-lg text-gray-600">Proceed for the next step</p>
+            <p className="text-lg text-gray-600">Proceed to the next step</p>
           </div>
         )}
 
-       {/* Spinning Diamonds */}
-<div className="absolute inset-0 flex items-center justify-center z-0">
-  <img
-    src="/Image/diamond-large.svg"
-    alt="Diamond Large"
-    className="absolute w-[480px] h-[480px] md:w-[762px] md:h-[762px] animate-spin-slow"
-  />
-  <img
-    src="/Image/diamond-medium.svg"
-    alt="Diamond Medium"
-    className="absolute w-[400px] h-[400px] md:w-[682px] md:h-[682px] animate-spin-slower"
-  />
-  <img
-    src="/Image/diamond-small.svg"
-    alt="Diamond Small"
-    className="absolute w-[320px] h-[320px] md:w-[602px] md:h-[602px] animate-spin-slowest"
-  />
-</div>
-</div>
-
+        {/* Spinning Diamonds */}
+        <div className="absolute inset-0 flex items-center justify-center z-0">
+          <img
+            src="/Image/diamond-large.svg"
+            alt="Diamond Large"
+            className="absolute w-[480px] h-[480px] md:w-[762px] md:h-[762px] animate-spin-slow"
+          />
+          <img
+            src="/Image/diamond-medium.svg"
+            alt="Diamond Medium"
+            className="absolute w-[400px] h-[400px] md:w-[682px] md:h-[682px] animate-spin-slower"
+          />
+          <img
+            src="/Image/diamond-small.svg"
+            alt="Diamond Small"
+            className="absolute w-[320px] h-[320px] md:w-[602px] md:h-[602px] animate-spin-slowest"
+          />
+        </div>
+      </div>
 
       {/* Bottom Navigation */}
       <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
-        {/* Back Button (untouched) */}
+        {/* Back Button */}
         <a href="/" className="inset-0" aria-label="Back">
           <div>
             <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -124,7 +122,7 @@ const Introduce = () => {
               </span>
             </div>
             <div className="group hidden sm:flex flex-row relative justify-center items-center">
-              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300" />
               <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">
                 ▶
               </span>
@@ -135,7 +133,7 @@ const Introduce = () => {
           </div>
         </a>
 
-        {/* Proceed Button (step 3 only) */}
+        {/* Proceed Button */}
         {step === 3 && (
           <a
             href="/result"
@@ -145,7 +143,7 @@ const Introduce = () => {
               <span className="text-sm font-semibold hidden sm:block mr-5">
                 PROCEED
               </span>
-              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+              <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300" />
               <span className="absolute right-[15px] bottom-[13px] scale-[0.9] hidden sm:block group-hover:scale-[0.92] ease duration-300">
                 ▶
               </span>
@@ -154,10 +152,10 @@ const Introduce = () => {
         )}
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Introduce;
+export default Introduce
 
 
 
