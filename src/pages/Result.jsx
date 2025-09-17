@@ -41,8 +41,8 @@ const Result = () => {
     reader.readAsDataURL(file)
     reader.onloadend = async () => {
       const base64 = reader.result
-      localStorage.setItem('previewImage', base64)
-      setPreview(base64)
+      // Don't store in localStorage - causes quota exceeded error
+      setPreview(base64) // Only for UI preview
       await sendToAPI(base64)
     }
   }
@@ -51,57 +51,34 @@ const Result = () => {
     try {
       console.log('Sending image to API...')
       
-      const response = await axios.post(
-        'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
-        { 
-          image: base64 
+      // FOR TESTING: Skip API and use dummy data
+      const dummyData = {
+        race: {
+          "White": 0.65,
+          "Hispanic": 0.20,
+          "Black": 0.10,
+          "Asian": 0.05
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          timeout: 30000
+        age: {
+          "25-32": 0.45,
+          "33-40": 0.30,
+          "18-24": 0.15,
+          "41-50": 0.10
+        },
+        gender: {
+          "Male": 0.75,
+          "Female": 0.25
         }
-      )
-      
-      console.log('API Response:', response.data)
-      
-      // Check if API call was successful
-      if (response.data && response.data.message && response.data.message.includes("SUCCESS")) {
-        // Extract demographic data from the response
-        const demographicData = {
-          race: response.data.data.race,
-          age: response.data.data.age,
-          gender: response.data.data.gender
-        }
-        
-        console.log('Demographic Analysis:', demographicData)
-        
-        // Store the complete analysis result
-        localStorage.setItem('analysisResult', JSON.stringify(demographicData))
-        
-        // Redirect to demographic page
-        window.location.href = '/demographic'
-        
-      } else {
-        throw new Error('API did not return success message')
       }
+      
+      // Store dummy data and redirect
+      localStorage.setItem('skinstricApiResponse', JSON.stringify(dummyData))
+      setTimeout(() => {
+        window.location.href = '/analysis'
+      }, 2000) // 2 second delay to show loading
       
     } catch (error) {
       console.error('Analysis failed:', error)
-      
-      // Handle different types of errors
-      if (error.code === 'ECONNABORTED') {
-        alert('Request timed out. Please try again with a smaller image.')
-      } else if (error.response) {
-        console.error('Server Error:', error.response.status, error.response.data)
-        alert(`API Error: ${error.response.status}. Please try again.`)
-      } else if (error.request) {
-        console.error('Network Error:', error.request)
-        alert('Network error. Please check your internet connection.')
-      } else {
-        alert('Failed to analyze image. Please try again.')
-      }
       setLoading(false)
     }
   }
@@ -161,11 +138,23 @@ const Result = () => {
     <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
-          <p className="text-lg mb-5">Analyzing your image...</p>
-          <p className="text-sm text-gray-500 mb-5">This may take a few moments</p>
-          <img src={largediamond} alt="Large-Diamond" className="animate-spin-slow" />
-          <img src={mediumdiamond} alt="Medium-Diamond" className="animate-spin-slower absolute" />
-          <img src={smalldiamond} alt="Small-Diamond" className="animate-spin-slowest absolute" />
+          <div className="relative flex items-center justify-center">
+            <img src={largediamond} alt="Large-Diamond" className="animate-spin-slow" />
+            <img src={mediumdiamond} alt="Medium-Diamond" className="animate-spin-slower absolute" />
+            <img src={smalldiamond} alt="Small-Diamond" className="animate-spin-slowest absolute" />
+            
+            {/* Text and dots centered in the middle of diamonds */}
+            <div className="absolute flex flex-col items-center justify-center z-10">
+              <p className="text-lg font-semibold text-[#1A1B1C] whitespace-nowrap">
+                PREPARING YOUR ANALYSIS
+              </p>
+              <div className="flex space-x-2 mt-3">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <div>
@@ -325,6 +314,10 @@ const Result = () => {
 }
 
 export default Result
+
+
+
+
 
 
 
