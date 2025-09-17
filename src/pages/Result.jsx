@@ -135,7 +135,7 @@ const Result = () => {
   )
 
   return (
-    <div style={{ margin: 0, padding: 0, maxWidth: 'none', textAlign: 'left' }}>
+    <div className="min-h-screen bg-white">
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
           <div className="relative flex items-center justify-center">
@@ -158,27 +158,34 @@ const Result = () => {
         </div>
       ) : (
         <div>
-          {/* Header */}
-          <div className="flex flex-row h-16 w-full justify-between py-3 mb-3 relative z-[1000]">
-            <div className="flex flex-row pt-1 scale-75 justify-center items-center">
-              <a 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-4 text-[#1A1B1C]" 
-                href="/"
-              >
-                SKINSTRIC
-              </a>
-              <img className="w-1 h-4" src={leftbracket} alt="" />
-              <p className="text-[#1a1b1c83] text-opacity-70 font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
-              <img className="w-1 h-4" src={rightbracket} alt="" />
+          {/* PROPER HEADER WRAPPER */}
+          <header className="w-full h-[80px] relative bg-white">
+            {/* ENTER CODE BUTTON - ALIGNED WITH SKINSTRIC TOP */}
+            <div className="absolute -top-4 right-0 -mr-[300px]">
+              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none h-9 px-4 py-2 scale-75 text-[#FCFCFC] text-xs bg-[#1A1B1C] leading-4">
+                ENTER CODE
+              </button>
             </div>
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none h-9 px-4 py-2 mx-4 scale-75 text-[#FCFCFC] text-xs bg-[#1A1B1C] leading-4">
-              ENTER CODE
-            </button>
-          </div>
+
+            {/* SKINSTRIC [ INTRO ] - CHANGE top-4 left-8 TO MOVE */}
+            <div className="absolute -top-4 left-[-330px]">
+              <div className="flex flex-row pt-1 scale-75 justify-start items-center">
+                <a 
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-4 text-[#1A1B1C]" 
+                  href="/"
+                >
+                  SKINSTRIC
+                </a>
+                <img className="w-1 h-4" src={leftbracket} alt="" />
+                <p className="text-[#1a1b1c83] text-opacity-70 font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
+                <img className="w-1 h-4" src={rightbracket} alt="" />
+              </div>
+            </div>
+          </header>
 
           <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-16 justify-center transition-all duration-300">
-            {/* Title */}
-            <div className="absolute top-2 left-9 md:left-8 text-left">
+            {/* TO START ANALYSIS - ALIGNED WITH TO START ANALYSIS TOP */}
+            <div className="absolute -top-14 left-[-295px]">
               <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
             </div>
 
@@ -239,8 +246,8 @@ const Result = () => {
                 </div>
               </div>
 
-              {/* Preview Box */}
-              <div className="absolute top-[-75px] right-7 md:top-[-50px] md:right-8 transition-opacity duration-300 opacity-100">
+              {/* Preview Box - ALIGNED WITH TO START ANALYSIS TOP */}
+              <div className="absolute -top-14 right-0 -mr-[300px] md:-top-14 md:right-0 md:-mr-[300px] transition-opacity duration-300 opacity-100">
                 <h1 className="text-xs md:text-sm font-normal mb-1">Preview</h1>
                 <div className="w-24 h-24 md:w-32 md:h-32 border border-gray-300 overflow-hidden bg-gray-50">
                   {preview && <img src={preview} alt="Preview" className="w-full h-full object-cover" />}
@@ -264,21 +271,25 @@ const Result = () => {
               />
             </div>
 
-            {/* Back Button */}
-            <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
-              <a className="relative" href="/introduce">
-                <div>
-                  <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-100 sm:hidden">
-                    <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
-                  </div>
-                  <div className="group hidden sm:flex flex-row relative justify-center items-center">
-                    <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-85 group-hover:scale-92 ease duration-300" />
-                    <span className="absolute left-4 bottom-3 scale-90 rotate-180 hidden sm:block group-hover:scale-92 ease duration-300">▶</span>
-                    <span className="text-sm font-semibold hidden sm:block ml-6">BACK</span>
-                  </div>
-                </div>
-              </a>
-            </div>
+          {/* Back Button - ALIGNED WITH SKINSTRIC/ANALYSIS TEXT ON LEFT */}
+{/* Back Button - MOVE RIGHT INCREMENTALLY */}
+<div className="absolute bottom-16 left-[-280px]">  {/* Move right 130px */}
+
+  <a className="relative" href="/introduce">
+    <div>
+      <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-100 sm:hidden">
+        <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
+      </div>
+      <div className="group hidden sm:flex flex-row relative justify-center items-center">
+        <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-85 group-hover:scale-92 ease duration-300" />
+        <span className="absolute left-4 bottom-3 scale-90 rotate-180 hidden sm:block group-hover:scale-92 ease duration-300">▶</span>
+        <span className="text-sm font-semibold hidden sm:block ml-6">BACK</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+
           </div>
         </div>
       )}
