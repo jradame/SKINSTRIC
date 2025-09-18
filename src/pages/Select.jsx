@@ -3,7 +3,7 @@ import React from 'react'
 const Select = () => {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header - JUST THE BUTTON */}
+      {/* Header - ORIGINAL LAYOUT RESTORED */}
       <div className="flex flex-row h-[64px] w-full justify-end py-3 mb-3 relative z-[1000]">
         <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mx-4 scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
           ENTER CODE
@@ -39,13 +39,13 @@ const Select = () => {
         </p>
       </div>
 
-      {/* Main Content - Diamond Grid - REDUCED HEIGHT */}
+      {/* Main Content - DIAMOND GRID WITH GROUP HOVER */}
       <div className="h-[65vh] flex flex-col items-center justify-center bg-white">
-        <div className="relative group">
+        <div className="relative diamond-container group">
           
-          {/* BIG SURROUNDING DIAMOND OUTLINE */}
+          {/* PERFECTLY SIZED DIAMOND OUTLINE - MATCHES IMAGE 2 */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-5">
-            <div className="w-[450px] h-[450px] border-2 border-dashed border-gray-600 rotate-45 transition-all duration-500 ease-in-out transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-70" />
+            <div className="w-[325px] h-[325px] border-2 border-dashed border-gray-600 rotate-45 transition-all duration-500 ease-in-out transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-70" />
           </div>
 
           {/* Background diamonds (invisible with opacity-0) */}
@@ -149,6 +149,7 @@ const Select = () => {
 }
 
 export default Select
+
 
 
 
