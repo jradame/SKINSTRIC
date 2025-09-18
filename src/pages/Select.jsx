@@ -41,7 +41,13 @@ const Select = () => {
 
       {/* Main Content - Diamond Grid - REDUCED HEIGHT */}
       <div className="h-[65vh] flex flex-col items-center justify-center bg-white">
-        <div className="relative">
+        <div className="relative group">
+          
+          {/* BIG SURROUNDING DIAMOND OUTLINE */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-5">
+            <div className="w-[450px] h-[450px] border-2 border-dashed border-gray-600 rotate-45 transition-all duration-500 ease-in-out transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-70" />
+          </div>
+
           {/* Background diamonds (invisible with opacity-0) */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="absolute transition-all duration-400 w-[400px] h-[400px] opacity-0">
@@ -143,6 +149,14 @@ const Select = () => {
 }
 
 export default Select
+
+
+
+
+
+
+
+
 
 
 

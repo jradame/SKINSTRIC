@@ -7,8 +7,8 @@ const Demographics = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Get analysis data from localStorage
-    const storedData = localStorage.getItem('analysisResult')
+    // FIXED: Use the correct localStorage key that matches Result.jsx
+    const storedData = localStorage.getItem('skinstricApiResponse')
     if (storedData) {
       setAnalysisData(JSON.parse(storedData))
       setLoading(false)
@@ -23,8 +23,8 @@ const Demographics = () => {
   }
 
   const handleReset = () => {
-    localStorage.removeItem('analysisResult')
-    localStorage.removeItem('previewImage')
+    localStorage.removeItem('skinstricApiResponse')
+    localStorage.removeItem('uploadedImage')
     navigate('/result')
   }
 
@@ -204,3 +204,4 @@ const Demographics = () => {
 }
 
 export default Demographics
+

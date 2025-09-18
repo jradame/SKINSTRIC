@@ -14,6 +14,30 @@ const Result = () => {
   const [preview, setPreview] = useState(null)
   const [loading, setLoading] = useState(false)
   const [showCameraPopup, setShowCameraPopup] = useState(false)
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+
+  // Image compression function
+  const compressImage = (file, maxWidth = 800, quality = 0.7) => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      
+      img.onload = () => {
+        // Calculate new dimensions
+        const ratio = Math.min(maxWidth / img.width, maxWidth / img.height)
+        canvas.width = img.width * ratio
+        canvas.height = img.height * ratio
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality)
+        resolve(compressedBase64)
+      }
+      
+      img.src = URL.createObjectURL(file)
+    })
+  }
 
   // Handle camera icon click - show custom popup
   const handleCameraClick = () => {
@@ -32,24 +56,35 @@ const Result = () => {
     setShowCameraPopup(false)
   }
 
-  // Handle file input change (for both camera and gallery)
-  const handleChange = (e) => {
+  // Handle success popup OK click
+  const handleSuccessOK = () => {
+    setShowSuccessPopup(false)
+    // Go directly to select page
+    window.location.href = '/select'
+  }
+
+  // Handle file input change - WITH COMPRESSION
+  const handleChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
-    setLoading(true)
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onloadend = async () => {
-      const base64 = reader.result
-      // Don't store in localStorage - causes quota exceeded error
-      setPreview(base64) // Only for UI preview
-      await sendToAPI(base64)
+    
+    try {
+      // Compress the image first
+      const compressedBase64 = await compressImage(file)
+      setPreview(compressedBase64) // Show compressed image in preview
+      setLoading(true) // Start loading
+      await sendToAPI(compressedBase64) // Send compressed image
+    } catch (error) {
+      console.error('Image compression failed:', error)
     }
   }
 
   const sendToAPI = async (base64) => {
     try {
       console.log('Sending image to API...')
+      
+      // Store compressed image for later use
+      localStorage.setItem('uploadedImage', base64)
       
       // FOR TESTING: Skip API and use dummy data
       const dummyData = {
@@ -71,11 +106,14 @@ const Result = () => {
         }
       }
       
-      // Store dummy data and redirect
+      // Store dummy data 
       localStorage.setItem('skinstricApiResponse', JSON.stringify(dummyData))
+      
+      // Show loading for 2 seconds, then show success popup
       setTimeout(() => {
-        window.location.href = '/analysis'
-      }, 2000) // 2 second delay to show loading
+        setLoading(false) // Hide loading
+        setShowSuccessPopup(true) // Show success popup
+      }, 2000)
       
     } catch (error) {
       console.error('Analysis failed:', error)
@@ -316,11 +354,34 @@ const Result = () => {
           </div>
         </>
       )}
+
+      {/* SUCCESS POPUP */}
+      {showSuccessPopup && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
+          <div className="fixed inset-0 flex items-center justify-center z-[9999]">
+            <div className="bg-[#2a2a2a] text-white p-6 rounded-lg max-w-sm mx-4 text-center">
+              <div className="mb-4">
+                <p className="text-sm text-gray-300 mb-2">skinstric-wandag.vercel.app says</p>
+                <p className="text-white font-medium">Image analyzed successfully!</p>
+              </div>
+              <button 
+                onClick={handleSuccessOK}
+                className="px-8 py-2 bg-[#4a9eff] text-white rounded-full text-sm font-medium hover:bg-[#3a8eef] transition-colors"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
 
 export default Result
+
+
 
 
 
