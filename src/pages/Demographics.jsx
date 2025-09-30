@@ -122,33 +122,33 @@ const Demographics = () => {
 </div>
 
 
-      {/* Bottom Buttons */}
-      <div className="absolute bottom-8 w-full flex justify-between px-12">
-        <button
-          onClick={handleBack}
-          className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
-        >
-          <div className="w-10 h-10 border border-black rotate-45 flex items-center justify-center">
-            <span className="rotate-[-45deg] text-sm">←</span>
-          </div>
-          <span className="text-base font-semibold">BACK</span>
-        </button>
+      {/* Bottom Buttons - Normal flow */}
+<div className="flex justify-between px-12 mt-8">
+  <button
+    onClick={handleBack}
+    className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+  >
+    <div className="w-10 h-10 border border-black rotate-45 flex items-center justify-center">
+      <span className="rotate-[-45deg] text-sm">←</span>
+    </div>
+    <span className="text-base font-semibold">BACK</span>
+  </button>
 
-        <div className="flex gap-6">
-          <button
-            onClick={handleReset}
-            className="px-8 py-3 border border-gray-400 text-base font-semibold hover:bg-gray-100 transition-colors"
-          >
-            RESET
-          </button>
-          <button
-            onClick={handleConfirm}
-            className="px-8 py-3 bg-black text-white text-base font-semibold hover:bg-gray-800 transition-colors"
-          >
-            CONFIRM
-          </button>
-        </div>
-      </div>
+  <div className="flex gap-6">
+    <button
+      onClick={handleReset}
+      className="px-8 py-3 border border-gray-400 text-base font-semibold hover:bg-gray-100 transition-colors"
+    >
+      RESET
+    </button>
+    <button
+      onClick={handleConfirm}
+      className="px-8 py-3 bg-black text-white text-base font-semibold hover:bg-gray-800 transition-colors"
+    >
+      CONFIRM
+    </button>
+  </div>
+</div>
     </div>
   );
 };
