@@ -69,26 +69,43 @@ const Demographics = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="flex flex-row h-16 w-full justify-between py-3 mb-6 relative z-[1000] px-12">
-        <div className="flex flex-row pt-1 scale-90 justify-center items-center">
-          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
-            SKINSTRIC
-          </span>
-          <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
-            [ ANALYSIS ]
-          </span>
-        </div>
-        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2 mx-4">
-          ENTER CODE
-        </button>
-      </header>
+     <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
+  {/* Force logo group to screen edge */}
+  <div className="fixed left-0 top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
+    <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
+      SKINSTRIC
+    </span>
+    <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
+      [ INTRO ]
+    </span>
+  </div>
 
-      {/* Page Title */}
-      <div className="px-12 mb-12">
-        <p className="text-base font-semibold mb-2">A.I. ANALYSIS</p>
-        <h1 className="text-[72px] font-normal leading-[72px]">DEMOGRAPHICS</h1>
-        <p className="text-lg text-gray-600">PREDICTED RACE & AGE</p>
-      </div>
+  {/* Rest of header content */}
+  <div className="ml-auto pr-12">
+    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2 mx-4">
+      ENTER CODE
+    </button>
+  </div>
+</header>
+
+
+
+   
+{/* Page Title */}
+<div class="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-[-1rem]">
+  <h2 class="font-semibold mb-2 leading-[24px] text-[14px]">A.I. ANALYSIS</h2>
+  <h3 class="font-normal leading-[60px] tracking-tighter text-[70px]">DEMOGRAPHICS</h3>
+  <h4 class="mt-3 leading-[24px] text-gray-600 text-[14px]">PREDICTED RACE & AGE</h4>
+</div>
+
+
+
+
+
+
+
+
+
 
       {/* Main Layout - GRID FULL WIDTH */}
 <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
