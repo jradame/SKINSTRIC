@@ -78,11 +78,13 @@ const Demographics = () => {
     </span>
   </div>
         {/* Right section */}
-        <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001]">
-  <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2">
-    ENTER CODE
-  </button>
+        <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001] scale-90">
+  <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-1">
+  ENTER CODE
+</button>
+
 </div>
+
 
 
 
