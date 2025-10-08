@@ -63,32 +63,25 @@ const Demographics = () => {
   const gender = topGender[0];
 
   return (
-      <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-     <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
-  {/* Force logo group to screen edge */}
-  <div className="absolute -left-[346px] top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
-
-
-    <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
-      SKINSTRIC
-    </span>
-    <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
-      [ INTRO ]
-    </span>
-  </div>
+      <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
+        {/* Logo group - positioned relatively within the header */}
+        <div className="absolute -left-[346px] top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
+          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
+            SKINSTRIC
+          </span>
+          <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
+            [ INTRO ]
+          </span>
+        </div>
+        
         {/* Right section */}
         <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001] scale-90">
-  <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-1">
-  ENTER CODE
-</button>
-
-</div>
-
-
-
-
-
+          <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-1">
+            ENTER CODE
+          </button>
+        </div>
       </header>
 
       {/* Page Title */}
@@ -174,30 +167,44 @@ const Demographics = () => {
         </div>
       </div>
 
-      {/* Bottom Buttons */}
-      <div className="flex justify-between px-12 mt-8">
-        <button
-          onClick={handleBack}
-          className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
-        >
-          <div className="w-10 h-10 border border-black rotate-45 flex items-center justify-center">
-            <span className="rotate-[-45deg] text-sm">←</span>
-          </div>
-          <span className="text-base font-semibold">BACK</span>
-        </button>
-
-        <div className="flex gap-6">
-          <button
-            onClick={handleReset}
-            className="px-8 py-3 border border-gray-400 text-base font-semibold hover:bg-gray-100 transition-colors"
-          >
-            RESET
+      {/* Bottom Navigation */}
+      <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16">
+        <div className="flex justify-between max-w-full mx-auto px-4 md:px-0">
+          {/* Back Button */}
+          <button onClick={handleBack}>
+            <div>
+              {/* Mobile Version */}
+              <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
+                <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
+              </div>
+              {/* Desktop Version */}
+              <div className="group hidden sm:flex flex-row relative justify-center items-center">
+                <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+                <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">▶</span>
+                <span className="text-sm font-semibold hidden sm:block ml-6">BACK</span>
+              </div>
+            </div>
           </button>
-          <button
-            onClick={handleConfirm}
-            className="px-8 py-3 bg-black text-white text-base font-semibold hover:bg-gray-800 transition-colors"
-          >
-            CONFIRM
+
+          {/* Center Text */}
+          <div className="text-sm text-gray-500 text-center hidden sm:block">
+            If A.I. estimate is wrong, select the correct one.
+          </div>
+
+          {/* Home Button */}
+          <button onClick={() => navigate("/")}>
+            <div>
+              {/* Mobile Version */}
+              <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
+                <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">HOME</span>
+              </div>
+              {/* Desktop Version */}
+              <div className="hidden sm:flex flex-row relative justify-center items-center">
+                <span className="text-sm font-semibold hidden sm:block mr-5">HOME</span>
+                <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85]"></div>
+                <span className="absolute right-[15px] bottom-[13px] scale-[0.9] hidden sm:block">▶</span>
+              </div>
+            </div>
           </button>
         </div>
       </div>
@@ -206,6 +213,7 @@ const Demographics = () => {
 };
 
 export default Demographics;
+
 
 
 
