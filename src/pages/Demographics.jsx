@@ -168,10 +168,11 @@ const Demographics = () => {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16">
-        <div className="flex justify-between max-w-full mx-auto px-4 md:px-0">
-          {/* Back Button */}
-          <button onClick={handleBack}>
+      <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16 relative">
+        <div className="flex justify-between items-center w-full">
+          {/* Back Button - Positioned to far left, moved down and inward */}
+          <button onClick={handleBack} className="absolute left-8 transform translate-y-10">
+
             <div>
               {/* Mobile Version */}
               <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -186,13 +187,14 @@ const Demographics = () => {
             </div>
           </button>
 
-          {/* Center Text */}
-          <div className="text-sm text-gray-500 text-center hidden sm:block">
+          {/* Center Text - Centered with middle grid section, moved down */}
+          <div className="text-sm text-gray-500 text-center hidden sm:block absolute left-1/2 transform -translate-x-1/2 translate-y-6">
             If A.I. estimate is wrong, select the correct one.
           </div>
 
-          {/* Home Button */}
-          <button onClick={() => navigate("/")}>
+          {/* Home Button - Positioned to far right, moved down and inward */}
+          <button onClick={() => navigate("/")} className="absolute right-8 transform translate-y-10">
+
             <div>
               {/* Mobile Version */}
               <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
