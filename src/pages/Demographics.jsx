@@ -16,9 +16,7 @@ const Demographics = () => {
     }
   }, [navigate]);
 
-  const handleBack = () => {
-    navigate("/result");
-  };
+  const handleBack = () => navigate("/result");
 
   const handleReset = () => {
     localStorage.removeItem("skinstricApiResponse");
@@ -26,9 +24,7 @@ const Demographics = () => {
     navigate("/result");
   };
 
-  const handleConfirm = () => {
-    navigate("/select");
-  };
+  const handleConfirm = () => navigate("/select");
 
   if (loading) {
     return (
@@ -67,11 +63,13 @@ const Demographics = () => {
   const gender = topGender[0];
 
   return (
-    <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white">
       {/* Header */}
      <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
   {/* Force logo group to screen edge */}
-  <div className="fixed left-0 top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
+  <div className="absolute -left-[346px] top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
+
+
     <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
       SKINSTRIC
     </span>
@@ -79,99 +77,129 @@ const Demographics = () => {
       [ INTRO ]
     </span>
   </div>
+        {/* Right section */}
+        <div className="ml-auto pr-12">
+          <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2 mx-4">
+            ENTER CODE
+          </button>
+        </div>
+      </header>
 
-  {/* Rest of header content */}
-  <div className="ml-auto pr-12">
-    <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2 mx-4">
-      ENTER CODE
-    </button>
-  </div>
-</header>
-
-
-
-   
-{/* Page Title */}
-<div class="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-[-1rem]">
-  <h2 class="font-semibold mb-2 leading-[24px] text-[14px]">A.I. ANALYSIS</h2>
-  <h3 class="font-normal leading-[60px] tracking-tighter text-[70px]">DEMOGRAPHICS</h3>
-  <h4 class="mt-3 leading-[24px] text-gray-600 text-[14px]">PREDICTED RACE & AGE</h4>
-</div>
-
-
-
-
-
-
-
-
-
+      {/* Page Title */}
+      <div className="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-[-1rem]">
+        <h2 className="font-semibold mb-2 leading-[24px] text-[14px]">
+          A.I. ANALYSIS
+        </h2>
+        <h3 className="font-normal leading-[60px] tracking-tighter text-[70px]">
+          DEMOGRAPHICS
+        </h3>
+        <h4 className="mt-3 leading-[24px] text-gray-600 text-[14px]">
+          PREDICTED RACE & AGE
+        </h4>
+      </div>
 
       {/* Main Layout - GRID FULL WIDTH */}
-<div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
-  {/* Left Sidebar */}
-  <div className="col-span-2 flex flex-col gap-6 p-6">
-    <img src="/Image/race1.svg" alt="Race" className="cursor-pointer hover:opacity-80 w-full" />
-    <img src="/Image/age1.svg" alt="Age" className="cursor-pointer hover:opacity-80 w-full" />
-    <img src="/Image/sex1.svg" alt="Sex" className="cursor-pointer hover:opacity-80 w-full" />
-  </div>
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
+        {/* Left Sidebar */}
+        <div className="col-span-2 flex flex-col gap-6 p-6">
+          <img
+            src="/Image/race1.svg"
+            alt="Race"
+            className="cursor-pointer hover:opacity-80 w-full"
+          />
+          <img
+            src="/Image/age1.svg"
+            alt="Age"
+            className="cursor-pointer hover:opacity-80 w-full"
+          />
+          <img
+            src="/Image/sex1.svg"
+            alt="Sex"
+            className="cursor-pointer hover:opacity-80 w-full"
+          />
+        </div>
 
-  {/* Middle Chart */}
-  <div className="col-span-7 flex items-stretch">
-    <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
-      <div className="text-5xl font-medium capitalize">{topRaceName}</div>
-      <div className="relative w-96 h-96 flex-shrink-0">
-        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
-          <circle cx="50" cy="50" r="45" stroke="#111" strokeWidth="6" fill="none" strokeDasharray={`${topRacePercentage * 2.827} 282.7`} strokeLinecap="round" />
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-5xl font-bold">{topRacePercentage}%</span>
+        {/* Middle Chart */}
+        <div className="col-span-7 flex items-stretch">
+          <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
+            <div className="text-5xl font-medium capitalize">
+              {topRaceName}
+            </div>
+            <div className="relative w-96 h-96 flex-shrink-0">
+              <svg
+                className="w-full h-full transform -rotate-90"
+                viewBox="0 0 100 100"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  stroke="#D1D5DB"
+                  strokeWidth="6"
+                  fill="none"
+                />
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  stroke="#111"
+                  strokeWidth="6"
+                  fill="none"
+                  strokeDasharray={`${topRacePercentage * 2.827} 282.7`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-5xl font-bold">
+                  {topRacePercentage}%
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="col-span-3 flex items-stretch p-6">
+          <img
+            src="/Image/race2.svg"
+            alt="Race breakdown"
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
-    </div>
-  </div>
 
-  {/* Right Sidebar */}
-  <div className="col-span-3 flex items-stretch p-6">
-    <img src="/Image/race2.svg" alt="Race breakdown" className="w-full h-full object-contain" />
-  </div>
-</div>
+      {/* Bottom Buttons */}
+      <div className="flex justify-between px-12 mt-8">
+        <button
+          onClick={handleBack}
+          className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
+        >
+          <div className="w-10 h-10 border border-black rotate-45 flex items-center justify-center">
+            <span className="rotate-[-45deg] text-sm">←</span>
+          </div>
+          <span className="text-base font-semibold">BACK</span>
+        </button>
 
-
-      {/* Bottom Buttons - Normal flow */}
-<div className="flex justify-between px-12 mt-8">
-  <button
-    onClick={handleBack}
-    className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors"
-  >
-    <div className="w-10 h-10 border border-black rotate-45 flex items-center justify-center">
-      <span className="rotate-[-45deg] text-sm">←</span>
-    </div>
-    <span className="text-base font-semibold">BACK</span>
-  </button>
-
-  <div className="flex gap-6">
-    <button
-      onClick={handleReset}
-      className="px-8 py-3 border border-gray-400 text-base font-semibold hover:bg-gray-100 transition-colors"
-    >
-      RESET
-    </button>
-    <button
-      onClick={handleConfirm}
-      className="px-8 py-3 bg-black text-white text-base font-semibold hover:bg-gray-800 transition-colors"
-    >
-      CONFIRM
-    </button>
-  </div>
-</div>
+        <div className="flex gap-6">
+          <button
+            onClick={handleReset}
+            className="px-8 py-3 border border-gray-400 text-base font-semibold hover:bg-gray-100 transition-colors"
+          >
+            RESET
+          </button>
+          <button
+            onClick={handleConfirm}
+            className="px-8 py-3 bg-black text-white text-base font-semibold hover:bg-gray-800 transition-colors"
+          >
+            CONFIRM
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Demographics;
-
 
 
 
