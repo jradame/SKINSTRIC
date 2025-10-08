@@ -18,14 +18,6 @@ const Demographics = () => {
 
   const handleBack = () => navigate("/result");
 
-  const handleReset = () => {
-    localStorage.removeItem("skinstricApiResponse");
-    localStorage.removeImage("uploadedImage");
-    navigate("/result");
-  };
-
-  const handleConfirm = () => navigate("/select");
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-white">
@@ -50,23 +42,11 @@ const Demographics = () => {
   const topRaceName = topRace[0].replace("_", " ");
   const topRacePercentage = Math.round(topRace[1] * 100);
 
-  const ageData = analysisData.age || {};
-  const topAge = Object.entries(ageData).reduce((a, b) =>
-    ageData[a[0]] > ageData[b[0]] ? a : b
-  );
-  const ageRange = topAge[0].replace("_", "-");
-
-  const genderData = analysisData.gender || {};
-  const topGender = Object.entries(genderData).reduce((a, b) =>
-    genderData[a[0]] > genderData[b[0]] ? a : b
-  );
-  const gender = topGender[0];
-
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
-        {/* Logo group - positioned relatively within the header */}
+        {/* Left Logo Section */}
         <div className="absolute -left-[346px] top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
           <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
             SKINSTRIC
@@ -76,7 +56,7 @@ const Demographics = () => {
           </span>
         </div>
         
-        {/* Right section */}
+        {/* Right Button Section */}
         <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001] scale-90">
           <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-1">
             ENTER CODE
@@ -97,25 +77,13 @@ const Demographics = () => {
         </h4>
       </div>
 
-      {/* Main Layout - GRID FULL WIDTH */}
+      {/* Main Layout - Full Width Grid */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
         {/* Left Sidebar */}
         <div className="col-span-2 flex flex-col gap-6 p-6">
-          <img
-            src="/Image/race1.svg"
-            alt="Race"
-            className="cursor-pointer hover:opacity-80 w-full"
-          />
-          <img
-            src="/Image/age1.svg"
-            alt="Age"
-            className="cursor-pointer hover:opacity-80 w-full"
-          />
-          <img
-            src="/Image/sex1.svg"
-            alt="Sex"
-            className="cursor-pointer hover:opacity-80 w-full"
-          />
+          <img src="/Image/race1.svg" alt="Race" className="cursor-pointer hover:opacity-80 w-full" />
+          <img src="/Image/age1.svg" alt="Age" className="cursor-pointer hover:opacity-80 w-full" />
+          <img src="/Image/sex1.svg" alt="Sex" className="cursor-pointer hover:opacity-80 w-full" />
         </div>
 
         {/* Middle Chart */}
@@ -125,33 +93,21 @@ const Demographics = () => {
               {topRaceName}
             </div>
             <div className="relative w-96 h-96 flex-shrink-0">
-              <svg
-                className="w-full h-full transform -rotate-90"
-                viewBox="0 0 100 100"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="#D1D5DB"
-                  strokeWidth="6"
-                  fill="none"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="#111"
-                  strokeWidth="6"
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
+                <circle 
+                  cx="50" 
+                  cy="50" 
+                  r="45" 
+                  stroke="#111" 
+                  strokeWidth="6" 
                   fill="none"
                   strokeDasharray={`${topRacePercentage * 2.827} 282.7`}
                   strokeLinecap="round"
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl font-bold">
-                  {topRacePercentage}%
-                </span>
+                <span className="text-5xl font-bold">{topRacePercentage}%</span>
               </div>
             </div>
           </div>
@@ -159,20 +115,15 @@ const Demographics = () => {
 
         {/* Right Sidebar */}
         <div className="col-span-3 flex items-stretch p-6">
-          <img
-            src="/Image/race2.svg"
-            alt="Race breakdown"
-            className="w-full h-full object-contain"
-          />
+          <img src="/Image/race2.svg" alt="Race breakdown" className="w-full h-full object-contain" />
         </div>
       </div>
 
       {/* Bottom Navigation */}
       <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16 relative">
         <div className="flex justify-between items-center w-full">
-          {/* Back Button - Positioned to far left, moved down and inward */}
+          {/* Back Button */}
           <button onClick={handleBack} className="absolute left-8 transform translate-y-10">
-
             <div>
               {/* Mobile Version */}
               <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -187,14 +138,13 @@ const Demographics = () => {
             </div>
           </button>
 
-          {/* Center Text - Centered with middle grid section, moved down */}
-          <div className="text-sm text-gray-500 text-center hidden sm:block absolute left-1/2 transform -translate-x-1/2 translate-y-6">
+          {/* Center Text */}
+          <div className="text-sm text-gray-500 text-center hidden sm:block absolute left-1/2 transform -translate-x-1/2 translate-y-6 -translate-x-[260px]">
             If A.I. estimate is wrong, select the correct one.
           </div>
 
-          {/* Home Button - Positioned to far right, moved down and inward */}
+          {/* Home Button */}
           <button onClick={() => navigate("/")} className="absolute right-8 transform translate-y-10">
-
             <div>
               {/* Mobile Version */}
               <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -215,6 +165,7 @@ const Demographics = () => {
 };
 
 export default Demographics;
+
 
 
 
