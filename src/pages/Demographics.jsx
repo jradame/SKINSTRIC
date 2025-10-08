@@ -78,11 +78,15 @@ const Demographics = () => {
     </span>
   </div>
         {/* Right section */}
-        <div className="ml-auto pr-12">
-          <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2 mx-4">
-            ENTER CODE
-          </button>
-        </div>
+        <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001]">
+  <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-4 py-2">
+    ENTER CODE
+  </button>
+</div>
+
+
+
+
       </header>
 
       {/* Page Title */}
