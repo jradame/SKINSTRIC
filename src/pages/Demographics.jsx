@@ -16,7 +16,7 @@ const Demographics = () => {
     }
   }, [navigate]);
 
-  const handleBack = () => navigate("/result");
+  const handleBack = () => navigate("/select");
 
   if (loading) {
     return (
@@ -165,9 +165,6 @@ const Demographics = () => {
 };
 
 export default Demographics;
-
-
-
 
 
 
