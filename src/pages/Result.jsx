@@ -53,7 +53,10 @@ const Result = () => {
 
   const handleAllowCamera = async () => {
     setShowCameraPopup(false)
+    console.log('🔴 STEP 1: Popup closed')
+    
     try {
+      console.log('🔴 STEP 2: Requesting camera...')
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'user',
@@ -63,13 +66,22 @@ const Result = () => {
         audio: false
       })
       
+      console.log('🔴 STEP 3: Camera stream received!', mediaStream)
+      console.log('🔴 STEP 4: videoRef.current exists?', !!videoRef.current)
+      
       if (videoRef.current) {
         videoRef.current.srcObject = mediaStream
-        setStream(mediaStream)
-        setShowCameraModal(true)
+        console.log('🔴 STEP 5: Video stream attached')
       }
+      
+      setStream(mediaStream)
+      console.log('🔴 STEP 6: Stream state updated')
+      
+      setShowCameraModal(true)
+      console.log('🔴 STEP 7: showCameraModal set to TRUE')
+      
     } catch (error) {
-      console.error('Camera access denied:', error)
+      console.error('❌ Camera access denied:', error)
       alert('Camera access was denied. Please allow camera permissions in your browser settings and try again.')
     }
   }
@@ -86,7 +98,7 @@ const Result = () => {
     setShowCameraModal(false)
   }
 
-  const handleCapturePhoto = () => {
+  const handleCapturePhoto = async () => {
     if (!videoRef.current || !canvasRef.current) return
     
     const video = videoRef.current
@@ -97,12 +109,19 @@ const Result = () => {
     canvas.height = video.videoHeight
     
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
-    const imageSrc = canvas.toDataURL('image/jpeg')
+    const imageSrc = canvas.toDataURL('image/jpeg', 0.9)
     
     setPreview(imageSrc)
     handleCloseCameraModal()
     setLoading(true)
-    sendToAPI(imageSrc)
+    
+    try {
+      await sendToAPI(imageSrc)
+    } catch (error) {
+      console.error('Failed to send to API:', error)
+      setLoading(false)
+      alert('Failed to analyze image. Please try again.')
+    }
   }
 
   const handleSuccessOK = () => {
@@ -121,6 +140,7 @@ const Result = () => {
       await sendToAPI(compressedBase64)
     } catch (error) {
       console.error('Image compression failed:', error)
+      setLoading(false)
     }
   }
 
@@ -214,6 +234,8 @@ const Result = () => {
       />
     </div>
   )
+
+  console.log('🟢 RENDER: showCameraModal =', showCameraModal)
 
   return (
     <div className="min-h-screen bg-white">
@@ -315,7 +337,7 @@ const Result = () => {
                 </div>
               </div>
 
-              {/* Preview Box - FIXED POSITIONING */}
+              {/* Preview Box */}
               <div className="absolute top-[-75px] right-7 md:top-[-50px] md:right-8 transition-opacity duration-300 opacity-100">
                 <h1 className="text-xs md:text-sm font-normal mb-1">Preview</h1>
                 <div className="w-24 h-24 md:w-32 md:h-32 border border-gray-300 overflow-hidden bg-gray-50">
@@ -339,7 +361,7 @@ const Result = () => {
               />
             </div>
 
-            {/* Back Button - FIXED POSITIONING */}
+            {/* Back Button */}
             <div className="pt-4 md:pt-0 pb-8 bg-white sticky md:static bottom-30.5 mb-0 md:mb-0">
               <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
                 <a className="relative" aria-label="Back" href="/introduce">
@@ -366,22 +388,28 @@ const Result = () => {
       {/* Camera Permission Popup */}
       {showCameraPopup && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
-          <div className="fixed inset-0 flex items-center justify-center z-[9999]">
-            <div className="relative">
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" onClick={handleDenyCamera} />
+          <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none">
+            <div className="relative pointer-events-auto">
               <img 
                 src="/Image/float-info.svg" 
                 alt="Camera Permission" 
-                className="w-auto h-auto"
-              />
-              <button 
-                onClick={handleAllowCamera}
-                className="absolute bottom-4 right-8 w-20 h-8 bg-transparent hover:bg-white hover:bg-opacity-10 rounded"
+                className="w-auto h-auto max-w-[90vw]"
               />
               <button 
                 onClick={handleDenyCamera}
-                className="absolute bottom-4 left-8 w-16 h-8 bg-transparent hover:bg-white hover:bg-opacity-10 rounded"
-              />
+                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
+                aria-label="Deny camera"
+              >
+                <span className="sr-only">Deny</span>
+              </button>
+              <button 
+                onClick={handleAllowCamera}
+                className="absolute bottom-[8%] right-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
+                aria-label="Allow camera"
+              >
+                <span className="sr-only">Allow</span>
+              </button>
             </div>
           </div>
         </>
@@ -446,6 +474,9 @@ const Result = () => {
 }
 
 export default Result
+
+
+
 
 
 
