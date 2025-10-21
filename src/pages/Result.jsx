@@ -53,10 +53,8 @@ const Result = () => {
 
   const handleAllowCamera = async () => {
     setShowCameraPopup(false)
-    console.log('🔴 STEP 1: Popup closed')
     
     try {
-      console.log('🔴 STEP 2: Requesting camera...')
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { 
           facingMode: 'user',
@@ -66,22 +64,18 @@ const Result = () => {
         audio: false
       })
       
-      console.log('🔴 STEP 3: Camera stream received!', mediaStream)
-      console.log('🔴 STEP 4: videoRef.current exists?', !!videoRef.current)
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream
-        console.log('🔴 STEP 5: Video stream attached')
-      }
-      
       setStream(mediaStream)
-      console.log('🔴 STEP 6: Stream state updated')
-      
       setShowCameraModal(true)
-      console.log('🔴 STEP 7: showCameraModal set to TRUE')
+      
+      setTimeout(() => {
+        if (videoRef.current && mediaStream) {
+          videoRef.current.srcObject = mediaStream
+          videoRef.current.play()
+        }
+      }, 100)
       
     } catch (error) {
-      console.error('❌ Camera access denied:', error)
+      console.error('Camera access denied:', error)
       alert('Camera access was denied. Please allow camera permissions in your browser settings and try again.')
     }
   }
@@ -150,25 +144,33 @@ const Result = () => {
       
       localStorage.setItem('uploadedImage', base64)
       
-      const base64Data = base64.split(',')[1] || base64
+      // Strip the data:image/jpeg;base64, prefix
+      let base64Data = base64
+      if (base64.includes(',')) {
+        base64Data = base64.split(',')[1]
+      }
+      
+      // Try lowercase 'image' field name
+      const payload = {
+        image: base64Data
+      }
+      
+      console.log('Sending payload with image length:', base64Data.length)
       
       const response = await fetch('https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          Image: base64Data
-        })
+        body: JSON.stringify(payload)
       })
 
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`)
-      }
-
       const result = await response.json()
-      
       console.log('API Response:', result)
+      
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || `API Error: ${response.status}`)
+      }
       
       if (result.data) {
         localStorage.setItem('skinstricApiResponse', JSON.stringify(result.data))
@@ -234,8 +236,6 @@ const Result = () => {
       />
     </div>
   )
-
-  console.log('🟢 RENDER: showCameraModal =', showCameraModal)
 
   return (
     <div className="min-h-screen bg-white">
@@ -474,6 +474,9 @@ const Result = () => {
 }
 
 export default Result
+
+
+
 
 
 
