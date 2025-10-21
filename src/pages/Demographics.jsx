@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Demographics = () => {
   const [analysisData, setAnalysisData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('race'); // New state for category
+  const [selectedCategory, setSelectedCategory] = useState('race');
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ const Demographics = () => {
     }
   }, [navigate]);
 
-  // Set initial selected item when data loads or category changes
   useEffect(() => {
     if (analysisData) {
       if (selectedCategory === 'race') {
@@ -77,7 +76,6 @@ const Demographics = () => {
     );
   }
 
-  // Race data
   const raceList = [
     { key: 'latino_hispanic', name: 'Latino hispanic', percentage: 72 },
     { key: 'white', name: 'White', percentage: 11 },
@@ -91,7 +89,6 @@ const Demographics = () => {
     isSelected: selectedItem?.key === race.key && selectedCategory === 'race'
   }));
 
-  // Age data
   const ageList = [
     { key: '3_9', name: '3-9', percentage: 86 },
     { key: '10_19', name: '10-19', percentage: 4 },
@@ -107,7 +104,6 @@ const Demographics = () => {
     isSelected: selectedItem?.key === age.key && selectedCategory === 'age'
   }));
 
-  // Sex/Gender data from your screenshot
   const sexList = [
     { key: 'female', name: 'FEMALE', percentage: 52 },
     { key: 'male', name: 'MALE', percentage: 47 }
@@ -118,26 +114,29 @@ const Demographics = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="flex flex-row h-16 w-full py-3 mb-6 relative z-[1000]">
-        <div className="absolute -left-[346px] top-0 h-16 flex flex-row pt-1 scale-90 items-center pl-4 bg-white z-[1001]">
-          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
-            SKINSTRIC
-          </span>
-          <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
-            [ INTRO ]
-          </span>
-        </div>
-        
-        <div className="absolute -right-[346px] top-0 h-16 flex items-center pr-4 bg-white z-[1001] scale-90">
-          <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-1">
+      {/* Fixed Header - Stays at top */}
+      <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-4 bg-white z-[1000] border-b border-gray-100">
+        <div className="flex flex-row justify-between items-center">
+          
+          {/* SKINSTRIC Logo */}
+          <div className="flex flex-row items-center scale-75 sm:scale-90 lg:scale-100">
+            <span className="font-semibold text-xs sm:text-sm lg:text-base mr-2 text-[#1A1B1C]">
+              SKINSTRIC
+            </span>
+            <span className="text-[#1a1b1c83] font-semibold text-xs sm:text-sm ml-1.5">
+              [ INTRO ]
+            </span>
+          </div>
+
+          {/* Enter Code Button */}
+          <button className="inline-flex items-center justify-center whitespace-nowrap font-semibold h-7 sm:h-8 lg:h-9 px-3 sm:px-4 text-[#FCFCFC] text-[9px] sm:text-[10px] lg:text-xs bg-[#1A1B1C] leading-4">
             ENTER CODE
           </button>
         </div>
       </header>
 
-      {/* Page Title */}
-      <div className="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-[-1rem]">
+      {/* Page Title - Add padding-top to account for fixed header */}
+      <div className="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-24">
         <h2 className="font-semibold mb-2 leading-[24px] text-[14px]">
           A.I. ANALYSIS
         </h2>
@@ -179,7 +178,7 @@ const Demographics = () => {
           />
         </div>
 
-        {/* Middle Chart - Updates based on selected item */}
+        {/* Middle Chart */}
         <div className="col-span-7 flex items-stretch">
           <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
             <div className="text-5xl font-medium capitalize">
@@ -208,7 +207,7 @@ const Demographics = () => {
           </div>
         </div>
 
-        {/* Right Sidebar - Dynamic list based on selected category */}
+        {/* Right Sidebar */}
         <div className="col-span-3 flex items-stretch p-6">
           <div className="w-full bg-white border border-gray-300 p-6">
             <div className="mb-4 border-b border-gray-300 pb-4">
@@ -343,6 +342,7 @@ const Demographics = () => {
 };
 
 export default Demographics;
+
 
 
 
