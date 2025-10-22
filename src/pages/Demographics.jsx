@@ -1,23 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
+// ========================================
+// DEMOGRAPHICS COMPONENT
+// Displays AI analysis results with interactive charts
+// Features: Race/Age/Sex selection, confidence percentages, circular charts
+// ========================================
 const Demographics = () => {
-  const [analysisData, setAnalysisData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('race');
-  const [selectedItem, setSelectedItem] = useState(null);
-  const navigate = useNavigate();
+  // ========================================
+  // STATE MANAGEMENT
+  // ========================================
+  const [analysisData, setAnalysisData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState('race')
+  const [selectedItem, setSelectedItem] = useState(null)
+  const navigate = useNavigate()
 
+  // ========================================
+  // LOAD ANALYSIS DATA
+  // Fetches stored API response from localStorage
+  // Redirects to /result if no data found
+  // ========================================
   useEffect(() => {
-    const storedData = localStorage.getItem("skinstricApiResponse");
+    const storedData = localStorage.getItem("skinstricApiResponse")
     if (storedData) {
-      setAnalysisData(JSON.parse(storedData));
-      setLoading(false);
+      setAnalysisData(JSON.parse(storedData))
+      setLoading(false)
     } else {
-      navigate("/result");
+      navigate("/result")
     }
-  }, [navigate]);
+  }, [navigate])
 
+  // ========================================
+  // SET DEFAULT SELECTED ITEM
+  // Updates default selection when category changes
+  // ========================================
   useEffect(() => {
     if (analysisData) {
       if (selectedCategory === 'race') {
@@ -26,56 +43,69 @@ const Demographics = () => {
           percentage: 72,
           key: 'latino_hispanic',
           category: 'race'
-        });
+        })
       } else if (selectedCategory === 'age') {
         setSelectedItem({
           name: '3-9',
           percentage: 86,
           key: '3_9',
           category: 'age'
-        });
+        })
       } else if (selectedCategory === 'sex') {
         setSelectedItem({
           name: 'Female',
           percentage: 52,
           key: 'female',
           category: 'sex'
-        });
+        })
       }
     }
-  }, [analysisData, selectedCategory]);
+  }, [analysisData, selectedCategory])
 
-  const handleBack = () => navigate("/select");
-
+  // ========================================
+  // EVENT HANDLERS
+  // ========================================
+  const handleBack = () => navigate("/select")
+  
   const handleItemClick = (itemKey, itemName, percentage, category) => {
     setSelectedItem({
       name: itemName,
       percentage: percentage,
       key: itemKey,
       category: category
-    });
-  };
-
+    })
+  }
+  
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+    setSelectedCategory(category)
+  }
 
+  // ========================================
+  // LOADING STATE
+  // ========================================
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-white">
         <div className="text-2xl">Loading demographics...</div>
       </div>
-    );
+    )
   }
 
+  // ========================================
+  // NO DATA STATE
+  // ========================================
   if (!analysisData) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-white">
         <div className="text-2xl">No analysis data found</div>
       </div>
-    );
+    )
   }
 
+  // ========================================
+  // DATA ARRAYS
+  // Static demographic data with percentages
+  // ========================================
   const raceList = [
     { key: 'latino_hispanic', name: 'Latino hispanic', percentage: 72 },
     { key: 'white', name: 'White', percentage: 11 },
@@ -87,7 +117,7 @@ const Demographics = () => {
   ].map(race => ({
     ...race,
     isSelected: selectedItem?.key === race.key && selectedCategory === 'race'
-  }));
+  }))
 
   const ageList = [
     { key: '3_9', name: '3-9', percentage: 86 },
@@ -102,7 +132,7 @@ const Demographics = () => {
   ].map(age => ({
     ...age,
     isSelected: selectedItem?.key === age.key && selectedCategory === 'age'
-  }));
+  }))
 
   const sexList = [
     { key: 'female', name: 'FEMALE', percentage: 52 },
@@ -110,33 +140,34 @@ const Demographics = () => {
   ].map(sex => ({
     ...sex,
     isSelected: selectedItem?.key === sex.key && selectedCategory === 'sex'
-  }));
+  }))
 
+  // ========================================
+  // RENDER
+  // ========================================
   return (
     <div className="min-h-screen bg-white">
-      {/* Fixed Header - Stays at top */}
-      <header className="fixed top-0 left-0 right-0 w-full px-4 sm:px-6 lg:px-8 py-4 bg-white z-[1000] border-b border-gray-100">
-        <div className="flex flex-row justify-between items-center">
-          
-          {/* SKINSTRIC Logo */}
-          <div className="flex flex-row items-center scale-75 sm:scale-90 lg:scale-100">
-            <span className="font-semibold text-xs sm:text-sm lg:text-base mr-2 text-[#1A1B1C]">
-              SKINSTRIC
-            </span>
-            <span className="text-[#1a1b1c83] font-semibold text-xs sm:text-sm ml-1.5">
-              [ INTRO ]
-            </span>
-          </div>
-
-          {/* Enter Code Button */}
-          <button className="inline-flex items-center justify-center whitespace-nowrap font-semibold h-7 sm:h-8 lg:h-9 px-3 sm:px-4 text-[#FCFCFC] text-[9px] sm:text-[10px] lg:text-xs bg-[#1A1B1C] leading-4">
-            ENTER CODE
-          </button>
+      
+      {/* ==================== HEADER ==================== */}
+      <header className="flex flex-row h-16 w-full justify-between py-3 mb-6 px-0">
+        {/* Logo and breadcrumb */}
+        <div className="flex flex-row items-center">
+          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
+            SKINSTRIC
+          </span>
+          <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
+            [ INTRO ]
+          </span>
         </div>
+        
+        {/* Enter Code button */}
+        <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-2">
+          ENTER CODE
+        </button>
       </header>
 
-      {/* Page Title - Add padding-top to account for fixed header */}
-      <div className="w-[800px] mb-12 flex flex-col justify-start items-start -ml-[20rem] mt-24">
+      {/* ==================== PAGE TITLE ==================== */}
+      <div className="w-full mb-12 pl-0">
         <h2 className="font-semibold mb-2 leading-[24px] text-[14px]">
           A.I. ANALYSIS
         </h2>
@@ -148,9 +179,10 @@ const Demographics = () => {
         </h4>
       </div>
 
-      {/* Main Layout - Full Width Grid */}
+      {/* ==================== MAIN LAYOUT ==================== */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
-        {/* Left Sidebar - Clickable category icons */}
+        
+        {/* ==================== LEFT SIDEBAR ==================== */}
         <div className="col-span-2 flex flex-col gap-6 p-6">
           <img 
             src="/Image/race1.svg" 
@@ -178,12 +210,13 @@ const Demographics = () => {
           />
         </div>
 
-        {/* Middle Chart */}
+        {/* ==================== MIDDLE CHART ==================== */}
         <div className="col-span-7 flex items-stretch">
           <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
             <div className="text-5xl font-medium capitalize">
               {selectedItem ? selectedItem.name : "Latino hispanic"}
             </div>
+            
             <div className="relative w-96 h-96 flex-shrink-0">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
@@ -207,7 +240,7 @@ const Demographics = () => {
           </div>
         </div>
 
-        {/* Right Sidebar */}
+        {/* ==================== RIGHT SIDEBAR ==================== */}
         <div className="col-span-3 flex items-stretch p-6">
           <div className="w-full bg-white border border-gray-300 p-6">
             <div className="mb-4 border-b border-gray-300 pb-4">
@@ -218,8 +251,8 @@ const Demographics = () => {
             </div>
             
             <div className="space-y-3">
-              {/* Race List */}
-              {selectedCategory === 'race' && raceList.map((race, index) => (
+              {/* RACE LIST */}
+              {selectedCategory === 'race' && raceList.map((race) => (
                 <div 
                   key={race.key} 
                   className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
@@ -245,8 +278,8 @@ const Demographics = () => {
                 </div>
               ))}
 
-              {/* Age List */}
-              {selectedCategory === 'age' && ageList.map((age, index) => (
+              {/* AGE LIST */}
+              {selectedCategory === 'age' && ageList.map((age) => (
                 <div 
                   key={age.key} 
                   className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
@@ -272,8 +305,8 @@ const Demographics = () => {
                 </div>
               ))}
 
-              {/* Sex/Gender List */}
-              {selectedCategory === 'sex' && sexList.map((sex, index) => (
+              {/* SEX LIST */}
+              {selectedCategory === 'sex' && sexList.map((sex) => (
                 <div 
                   key={sex.key} 
                   className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
@@ -303,9 +336,11 @@ const Demographics = () => {
         </div>
       </div>
 
-      {/* Bottom Navigation */}
+      {/* ==================== BOTTOM NAVIGATION ==================== */}
       <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16 relative">
         <div className="flex justify-between items-center w-full">
+          
+          {/* BACK button */}
           <button onClick={handleBack} className="absolute left-8 transform translate-y-10">
             <div>
               <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -319,10 +354,12 @@ const Demographics = () => {
             </div>
           </button>
 
+          {/* Helper text */}
           <div className="text-sm text-gray-500 text-center hidden sm:block absolute left-1/2 transform -translate-x-1/2 translate-y-6 -translate-x-[260px]">
             If A.I. estimate is wrong, select the correct one.
           </div>
 
+          {/* HOME button */}
           <button onClick={() => navigate("/")} className="absolute right-8 transform translate-y-10">
             <div>
               <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -338,14 +375,7 @@ const Demographics = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Demographics;
-
-
-
-
-
-
-
+export default Demographics
