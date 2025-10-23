@@ -368,7 +368,7 @@ const Result = () => {
                   />
 
                   <div className="absolute -top-[88px] right-[10px] flex flex-col items-center">
-                    <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[40px] translate-x-[100px]">
+                    <div className="text-xs md:text-sm font-normal mb-2 leading-[20px] text-center translate-y-[40px] translate-x-[110px]">
                       <p className="-translate-x-[34px]">ALLOW A.I.</p>
                       <p>TO SCAN YOUR FACE</p>
                     </div>
@@ -393,8 +393,8 @@ const Result = () => {
 
                   <div className="absolute bottom-[-20px] left-[-40px] flex flex-col items-start">
                     <div className="text-xs md:text-sm font-normal leading-[20px] text-left">
-                      <p className="mb-1 translate-x-[20px] translate-y-[92px]">ALLOW A.I.</p>
-                      <p className="translate-x-[-28px] translate-y-[88px]">ACCESS GALLERY</p>
+                      <p className="mb-1 translate-x-[10px] translate-y-[92px]">ALLOW A.I.</p>
+                      <p className="translate-x-[-38px] translate-y-[88px]">ACCESS GALLERY</p>
                     </div>
                     <img 
                       src="/Image/gallery-line.svg" 
