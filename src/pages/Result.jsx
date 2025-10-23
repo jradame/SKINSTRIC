@@ -19,24 +19,24 @@ const Result = () => {
   // ========================================
   // REFS
   // ========================================
-  const videoRef = useRef(null)           // Reference to video element for camera stream
-  const canvasRef = useRef(null)          // Reference to canvas for image capture
-  const cameraInputRef = useRef(null)     // Hidden file input for camera
-  const galleryInputRef = useRef(null)    // Hidden file input for gallery
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
+  const cameraInputRef = useRef(null)
+  const galleryInputRef = useRef(null)
 
   // ========================================
   // STATE MANAGEMENT
   // ========================================
-  const [preview, setPreview] = useState(null)                    // Stores preview image base64
-  const [loading, setLoading] = useState(false)                   // Loading state during API call
-  const [showCameraPopup, setShowCameraPopup] = useState(false)   // Camera permission popup
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false) // Success message popup
-  const [showCameraModal, setShowCameraModal] = useState(false)   // Live camera modal
-  const [stream, setStream] = useState(null)                      // Active camera stream
+  const [preview, setPreview] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [cameraLoading, setCameraLoading] = useState(false)
+  const [showCameraPopup, setShowCameraPopup] = useState(false)
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+  const [showCameraModal, setShowCameraModal] = useState(false)
+  const [stream, setStream] = useState(null)
 
   // ========================================
   // CLEANUP EFFECT
-  // Stops camera stream when component unmounts
   // ========================================
   useEffect(() => {
     return () => {
@@ -48,9 +48,6 @@ const Result = () => {
 
   // ========================================
   // IMAGE COMPRESSION
-  // Compresses gallery images before sending to API
-  // Params: file (File), maxWidth (number), quality (number)
-  // Returns: Promise<string> - base64 compressed image
   // ========================================
   const compressImage = (file, maxWidth = 800, quality = 0.7) => {
     return new Promise((resolve) => {
@@ -75,15 +72,13 @@ const Result = () => {
   // ========================================
   // CAMERA HANDLERS
   // ========================================
-  
-  // Opens camera permission popup
   const handleCameraClick = () => {
     setShowCameraPopup(true)
   }
 
-  // Requests camera access and opens live camera modal
   const handleAllowCamera = async () => {
     setShowCameraPopup(false)
+    setCameraLoading(true)
     
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -95,29 +90,32 @@ const Result = () => {
         audio: false
       })
       
-      setStream(mediaStream)
-      setShowCameraModal(true)
-      
-      // Wait for modal to render before attaching stream
+      // Wait 2 seconds for loading screen
       setTimeout(() => {
-        if (videoRef.current && mediaStream) {
-          videoRef.current.srcObject = mediaStream
-          videoRef.current.play()
-        }
-      }, 100)
+        setCameraLoading(false)
+        setStream(mediaStream)
+        setShowCameraModal(true)
+        
+        // Wait for modal to fully render, then attach stream
+        setTimeout(() => {
+          if (videoRef.current && mediaStream) {
+            videoRef.current.srcObject = mediaStream
+            videoRef.current.play().catch(err => console.error('Video play error:', err))
+          }
+        }, 200)
+      }, 2000)
       
     } catch (error) {
       console.error('Camera access denied:', error)
+      setCameraLoading(false)
       alert('Camera access was denied. Please allow camera permissions in your browser settings and try again.')
     }
   }
 
-  // Closes camera permission popup without activating camera
   const handleDenyCamera = () => {
     setShowCameraPopup(false)
   }
 
-  // Stops camera stream and closes modal
   const handleCloseCameraModal = () => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop())
@@ -126,7 +124,6 @@ const Result = () => {
     setShowCameraModal(false)
   }
 
-  // Captures photo from live camera feed
   const handleCapturePhoto = async () => {
     if (!videoRef.current || !canvasRef.current) return
     
@@ -134,15 +131,12 @@ const Result = () => {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
     
-    // Set canvas size to match video dimensions
     canvas.width = video.videoWidth
     canvas.height = video.videoHeight
     
-    // Draw current video frame to canvas
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
     const imageSrc = canvas.toDataURL('image/jpeg', 0.9)
     
-    // Display preview and start analysis
     setPreview(imageSrc)
     handleCloseCameraModal()
     setLoading(true)
@@ -176,7 +170,6 @@ const Result = () => {
 
   // ========================================
   // SUCCESS HANDLER
-  // Redirects to demographics selection page
   // ========================================
   const handleSuccessOK = () => {
     setShowSuccessPopup(false)
@@ -185,23 +178,18 @@ const Result = () => {
 
   // ========================================
   // API INTEGRATION
-  // Sends image to analysis endpoint
-  // NOTE: API expects lowercase 'image' field with base64 data (no prefix)
   // ========================================
   const sendToAPI = async (base64) => {
     try {
       console.log('Sending image to API...')
       
-      // Store image in localStorage for later use
       localStorage.setItem('uploadedImage', base64)
       
-      // Strip the data:image/jpeg;base64, prefix
       let base64Data = base64
       if (base64.includes(',')) {
         base64Data = base64.split(',')[1]
       }
       
-      // API expects lowercase 'image' field (case-sensitive)
       const payload = {
         image: base64Data
       }
@@ -219,12 +207,10 @@ const Result = () => {
       const result = await response.json()
       console.log('API Response:', result)
       
-      // Check for successful response
       if (!response.ok || !result.success) {
         throw new Error(result.message || `API Error: ${response.status}`)
       }
       
-      // Store analysis results and show success popup
       if (result.data) {
         localStorage.setItem('skinstricApiResponse', JSON.stringify(result.data))
         setLoading(false)
@@ -242,11 +228,9 @@ const Result = () => {
 
   // ========================================
   // DIAMOND BACKGROUND COMPONENT
-  // Animated spinning diamond background for camera/gallery sections
   // ========================================
   const DiamondBackground = () => (
     <div className="absolute inset-0 flex items-center justify-center -z-10">
-      {/* Large diamond - slowest rotation */}
       <div 
         className="absolute animate-spin-slow bg-black opacity-90"
         style={{ 
@@ -262,7 +246,6 @@ const Result = () => {
           WebkitMaskPosition: 'center'
         }}
       />
-      {/* Medium diamond - medium rotation */}
       <div 
         className="absolute animate-spin-slower bg-black opacity-90"
         style={{ 
@@ -278,7 +261,6 @@ const Result = () => {
           WebkitMaskPosition: 'center'
         }}
       />
-      {/* Small diamond - fastest rotation */}
       <div 
         className="absolute animate-spin-slowest bg-black opacity-90"
         style={{ 
@@ -302,6 +284,41 @@ const Result = () => {
   // ========================================
   return (
     <div className="min-h-screen bg-white">
+      {/* ==================== CAMERA LOADING SCREEN ==================== */}
+      {cameraLoading && (
+        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
+          <div className="relative w-80 h-80 mb-8">
+            <svg className="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                stroke="#9CA3AF"
+                strokeWidth="0.5"
+                strokeDasharray="2 4"
+              />
+            </svg>
+            
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg className="w-32 h-32 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 15.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5zm0-5.5c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z"/>
+                <path d="M20 5h-3.172l-1.414-1.414C15.039 3.211 14.535 3 14 3h-4c-.535 0-1.039.211-1.414.586L7.172 5H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 14H4V7h4.414l1.707-1.707C10.309 5.105 10.638 5 11 5h2c.362 0 .691.105.879.293L15.586 7H20v12z"/>
+                <circle cx="18" cy="8.5" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+          
+          <p className="text-xl text-gray-500 tracking-wider mb-32">SETTING UP CAMERA ...</p>
+          
+          <img 
+            src="/Image/camerainfo.svg" 
+            alt="Camera Instructions" 
+            className="absolute bottom-20 w-auto h-auto max-w-[600px]"
+          />
+        </div>
+      )}
+
       {/* ==================== LOADING SCREEN ==================== */}
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
@@ -326,7 +343,6 @@ const Result = () => {
         <div>
           {/* ==================== HEADER ==================== */}
           <div className="flex flex-row h-[64px] w-full justify-between py-3 mb-3 relative z-[1000]">
-            {/* Logo and breadcrumb */}
             <div className="flex flex-row pt-1 scale-75 justify-center items-center">
               <a 
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C] z-1000" 
@@ -338,7 +354,6 @@ const Result = () => {
               <p className="text-[#1a1b1c83] text-opacity-70 font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
               <img className="w-[4px] h-[17px]" src={rightbracket} alt="right-bracket" />
             </div>
-            {/* Enter Code button */}
             <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mx-4 scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
               ENTER CODE
             </button>
@@ -346,14 +361,12 @@ const Result = () => {
 
           {/* ==================== MAIN CONTENT ==================== */}
           <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-[64px] justify-center">
-            {/* Title */}
             <div className="absolute top-2 left-9 md:left-8 text-left">
               <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
             </div>
 
             <div className="flex-[0.4] md:flex-1 flex flex-col items-center xl:justify-center relative mb-0 md:mb-30">
               
-              {/* Camera and Gallery Options */}
               <div className="flex justify-center items-center gap-[300px] absolute top-[240px] w-full z-20">
                 
                 {/* ==================== CAMERA SECTION ==================== */}
@@ -413,7 +426,6 @@ const Result = () => {
                 </div>
               </div>
 
-              {/* Hidden file inputs */}
               <input
                 ref={cameraInputRef}
                 accept="image/*"
@@ -435,11 +447,9 @@ const Result = () => {
               <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
                 <a className="relative" aria-label="Back" href="/introduce">
                   <div>
-                    {/* Mobile back button */}
                     <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
                       <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
                     </div>
-                    {/* Desktop back button */}
                     <div className="group hidden sm:flex flex-row relative justify-center items-center">
                       <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
                       <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">▶</span>
@@ -453,8 +463,6 @@ const Result = () => {
         </div>
       )}
 
-      {/* ==================== HIDDEN CANVAS ==================== */}
-      {/* Used for capturing camera screenshots */}
       <canvas ref={canvasRef} className="hidden" />
 
       {/* ==================== CAMERA PERMISSION POPUP ==================== */}
@@ -468,7 +476,6 @@ const Result = () => {
                 alt="Camera Permission" 
                 className="w-auto h-auto max-w-[90vw]"
               />
-              {/* DENY button overlay - left side */}
               <button 
                 onClick={handleDenyCamera}
                 className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
@@ -476,7 +483,6 @@ const Result = () => {
               >
                 <span className="sr-only">Deny</span>
               </button>
-              {/* ALLOW button overlay - right side */}
               <button 
                 onClick={handleAllowCamera}
                 className="absolute bottom-[8%] right-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
@@ -495,7 +501,6 @@ const Result = () => {
           <div className="fixed inset-0 bg-black bg-opacity-90 z-[9998]" />
           <div className="fixed inset-0 flex flex-col items-center justify-center z-[9999] p-4">
             <div className="w-full max-w-2xl bg-black rounded-lg overflow-hidden">
-              {/* Live video feed */}
               <div className="relative aspect-video bg-black">
                 <video
                   ref={videoRef}
@@ -505,7 +510,6 @@ const Result = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* Controls */}
               <div className="flex justify-between items-center p-4 bg-[#1A1B1C]">
                 <button 
                   onClick={handleCloseCameraModal}
@@ -550,53 +554,4 @@ const Result = () => {
 }
 
 export default Result
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
