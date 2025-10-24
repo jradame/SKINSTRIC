@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom"
 
 // ========================================
 // DEMOGRAPHICS COMPONENT
-// Displays AI analysis results with interactive charts
-// Features: Race/Age/Sex selection, confidence percentages, circular charts
 // ========================================
 const Demographics = () => {
   // ========================================
@@ -18,8 +16,6 @@ const Demographics = () => {
 
   // ========================================
   // LOAD ANALYSIS DATA
-  // Fetches stored API response from localStorage
-  // Redirects to /result if no data found
   // ========================================
   useEffect(() => {
     const storedData = localStorage.getItem("skinstricApiResponse")
@@ -33,7 +29,6 @@ const Demographics = () => {
 
   // ========================================
   // SET DEFAULT SELECTED ITEM
-  // Updates default selection when category changes
   // ========================================
   useEffect(() => {
     if (analysisData) {
@@ -86,7 +81,7 @@ const Demographics = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-white">
-        <div className="text-2xl">Loading demographics...</div>
+        <div className="text-lg sm:text-xl md:text-2xl">Loading demographics...</div>
       </div>
     )
   }
@@ -97,14 +92,13 @@ const Demographics = () => {
   if (!analysisData) {
     return (
       <div className="flex justify-center items-center h-screen w-full bg-white">
-        <div className="text-2xl">No analysis data found</div>
+        <div className="text-lg sm:text-xl md:text-2xl">No analysis data found</div>
       </div>
     )
   }
 
   // ========================================
   // DATA ARRAYS
-  // Static demographic data with percentages
   // ========================================
   const raceList = [
     { key: 'latino_hispanic', name: 'Latino hispanic', percentage: 72 },
@@ -146,48 +140,47 @@ const Demographics = () => {
   // RENDER
   // ========================================
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       
-      {/* ==================== HEADER ==================== */}
-      <header className="flex flex-row h-16 w-full justify-between py-3 mb-6 px-0">
-        {/* Logo and breadcrumb */}
-        <div className="flex flex-row items-center">
-          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-base mr-2 text-[#1A1B1C]">
+      {/* ==================== HEADER - RESPONSIVE ==================== */}
+      <header className="flex flex-row h-14 sm:h-16 w-full justify-between items-center py-3 mb-4 sm:mb-6 px-4 sm:px-6 md:px-8">
+        <div className="flex flex-row items-center scale-[0.7] sm:scale-[0.8] md:scale-100 origin-left">
+          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold text-sm sm:text-base text-[#1A1B1C]">
             SKINSTRIC
           </span>
-          <span className="text-[#1a1b1c83] font-semibold text-sm ml-1.5">
+          <span className="text-[#1a1b1c83] font-semibold text-xs sm:text-sm ml-1.5">
             [ INTRO ]
           </span>
         </div>
         
-        {/* Enter Code button */}
-        <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-xs bg-[#1A1B1C] text-white px-3 py-2">
+        <button className="inline-flex items-center justify-center gap-1 whitespace-nowrap font-semibold text-[10px] sm:text-xs bg-[#1A1B1C] text-white px-2 sm:px-3 py-2 scale-[0.8] sm:scale-100">
           ENTER CODE
         </button>
       </header>
 
-      {/* ==================== PAGE TITLE ==================== */}
-      <div className="w-full mb-12 pl-0">
-        <h2 className="font-semibold mb-2 leading-[24px] text-[14px]">
+      {/* ==================== PAGE TITLE - RESPONSIVE ==================== */}
+      <div className="w-full mb-8 sm:mb-10 md:mb-12 px-4 sm:px-6 md:px-8">
+        <h2 className="font-semibold mb-2 leading-[20px] sm:leading-[24px] text-xs sm:text-sm">
           A.I. ANALYSIS
         </h2>
-        <h3 className="font-normal leading-[60px] tracking-tighter text-[70px]">
+        <h3 className="font-normal leading-[40px] sm:leading-[50px] md:leading-[60px] tracking-tighter text-[40px] sm:text-[55px] md:text-[70px]">
           DEMOGRAPHICS
         </h3>
-        <h4 className="mt-3 leading-[24px] text-gray-600 text-[14px]">
+        <h4 className="mt-2 sm:mt-3 leading-[20px] sm:leading-[24px] text-gray-600 text-xs sm:text-sm">
           PREDICTED RACE & AGE
         </h4>
       </div>
 
-      {/* ==================== MAIN LAYOUT ==================== */}
-      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] grid grid-cols-12 items-stretch">
+      {/* ==================== MAIN LAYOUT - RESPONSIVE ==================== */}
+      {/* Mobile: Stacked */}
+      <div className="lg:hidden px-4 space-y-6">
         
-        {/* ==================== LEFT SIDEBAR ==================== */}
-        <div className="col-span-2 flex flex-col gap-6 p-6">
+        {/* Category Selector - Mobile */}
+        <div className="flex gap-4 justify-center">
           <img 
             src="/Image/race1.svg" 
             alt="Race" 
-            className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+            className={`cursor-pointer hover:opacity-80 w-20 sm:w-24 transition-all duration-200 ${
               selectedCategory === 'race' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
             }`}
             onClick={() => handleCategoryClick('race')}
@@ -195,7 +188,7 @@ const Demographics = () => {
           <img 
             src="/Image/age1.svg" 
             alt="Age" 
-            className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+            className={`cursor-pointer hover:opacity-80 w-20 sm:w-24 transition-all duration-200 ${
               selectedCategory === 'age' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
             }`}
             onClick={() => handleCategoryClick('age')}
@@ -203,172 +196,321 @@ const Demographics = () => {
           <img 
             src="/Image/sex1.svg" 
             alt="Sex" 
-            className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+            className={`cursor-pointer hover:opacity-80 w-20 sm:w-24 transition-all duration-200 ${
               selectedCategory === 'sex' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
             }`}
             onClick={() => handleCategoryClick('sex')}
           />
         </div>
 
-        {/* ==================== MIDDLE CHART ==================== */}
-        <div className="col-span-7 flex items-stretch">
-          <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
-            <div className="text-5xl font-medium capitalize">
-              {selectedItem ? selectedItem.name : "Latino hispanic"}
-            </div>
-            
-            <div className="relative w-96 h-96 flex-shrink-0">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
-                <circle 
-                  cx="50" 
-                  cy="50" 
-                  r="45" 
-                  stroke="#111" 
-                  strokeWidth="6" 
-                  fill="none"
-                  strokeDasharray={`${selectedItem ? selectedItem.percentage * 2.827 : 72 * 2.827} 282.7`}
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl font-bold">
-                  {selectedItem ? selectedItem.percentage : 72}%
-                </span>
-              </div>
+        {/* Chart - Mobile */}
+        <div className="w-full bg-[#F5F6F7] border border-gray-300 p-6 sm:p-8">
+          <div className="text-2xl sm:text-3xl font-medium capitalize mb-4 text-center">
+            {selectedItem ? selectedItem.name : "Latino hispanic"}
+          </div>
+          
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
+              <circle 
+                cx="50" 
+                cy="50" 
+                r="45" 
+                stroke="#111" 
+                strokeWidth="6" 
+                fill="none"
+                strokeDasharray={`${selectedItem ? selectedItem.percentage * 2.827 : 72 * 2.827} 282.7`}
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-3xl sm:text-4xl font-bold">
+                {selectedItem ? selectedItem.percentage : 72}%
+              </span>
             </div>
           </div>
         </div>
 
-        {/* ==================== RIGHT SIDEBAR ==================== */}
-        <div className="col-span-3 flex items-stretch p-6">
-          <div className="w-full bg-white border border-gray-300 p-6">
-            <div className="mb-4 border-b border-gray-300 pb-4">
-              <h3 className="text-sm font-semibold text-gray-500 mb-2">
-                {selectedCategory.toUpperCase()}
-              </h3>
-              <h4 className="text-lg font-semibold">A.I. CONFIDENCE</h4>
+        {/* List - Mobile */}
+        <div className="w-full bg-white border border-gray-300 p-4 sm:p-6">
+          <div className="mb-4 border-b border-gray-300 pb-4">
+            <h3 className="text-xs sm:text-sm font-semibold text-gray-500 mb-2">
+              {selectedCategory.toUpperCase()}
+            </h3>
+            <h4 className="text-base sm:text-lg font-semibold">A.I. CONFIDENCE</h4>
+          </div>
+          
+          <div className="space-y-2 sm:space-y-3">
+            {selectedCategory === 'race' && raceList.map((race) => (
+              <div 
+                key={race.key} 
+                className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                  race.isSelected ? 'bg-black text-white' : ''
+                }`}
+                onClick={() => handleItemClick(race.key, race.name, race.percentage, 'race')}
+              >
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 mr-3 ${
+                    race.isSelected ? 'bg-white' : 'border border-gray-300'
+                  }`}></div>
+                  <span className={`text-xs sm:text-sm ${
+                    race.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                  }`}>
+                    {race.name}
+                  </span>
+                </div>
+                <span className={`text-xs sm:text-sm font-semibold ${
+                  race.isSelected ? 'text-white' : 'text-gray-700'
+                }`}>
+                  {race.percentage}%
+                </span>
+              </div>
+            ))}
+
+            {selectedCategory === 'age' && ageList.map((age) => (
+              <div 
+                key={age.key} 
+                className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                  age.isSelected ? 'bg-black text-white' : ''
+                }`}
+                onClick={() => handleItemClick(age.key, age.name, age.percentage, 'age')}
+              >
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 mr-3 ${
+                    age.isSelected ? 'bg-white' : 'border border-gray-300'
+                  }`}></div>
+                  <span className={`text-xs sm:text-sm ${
+                    age.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                  }`}>
+                    {age.name}
+                  </span>
+                </div>
+                <span className={`text-xs sm:text-sm font-semibold ${
+                  age.isSelected ? 'text-white' : 'text-gray-700'
+                }`}>
+                  {age.percentage}%
+                </span>
+              </div>
+            ))}
+
+            {selectedCategory === 'sex' && sexList.map((sex) => (
+              <div 
+                key={sex.key} 
+                className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                  sex.isSelected ? 'bg-black text-white' : ''
+                }`}
+                onClick={() => handleItemClick(sex.key, sex.name, sex.percentage, 'sex')}
+              >
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 mr-3 ${
+                    sex.isSelected ? 'bg-white' : 'border border-gray-300'
+                  }`}></div>
+                  <span className={`text-xs sm:text-sm ${
+                    sex.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                  }`}>
+                    {sex.name}
+                  </span>
+                </div>
+                <span className={`text-xs sm:text-sm font-semibold ${
+                  sex.isSelected ? 'text-white' : 'text-gray-700'
+                }`}>
+                  {sex.percentage}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: Grid Layout */}
+      <div className="hidden lg:block w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="grid grid-cols-12 items-stretch">
+          
+          {/* LEFT SIDEBAR - Desktop */}
+          <div className="col-span-2 flex flex-col gap-6 p-6">
+            <img 
+              src="/Image/race1.svg" 
+              alt="Race" 
+              className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+                selectedCategory === 'race' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
+              }`}
+              onClick={() => handleCategoryClick('race')}
+            />
+            <img 
+              src="/Image/age1.svg" 
+              alt="Age" 
+              className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+                selectedCategory === 'age' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
+              }`}
+              onClick={() => handleCategoryClick('age')}
+            />
+            <img 
+              src="/Image/sex1.svg" 
+              alt="Sex" 
+              className={`cursor-pointer hover:opacity-80 w-full transition-all duration-200 ${
+                selectedCategory === 'sex' ? 'ring-4 ring-black ring-opacity-50 scale-105' : ''
+              }`}
+              onClick={() => handleCategoryClick('sex')}
+            />
+          </div>
+
+          {/* MIDDLE CHART - Desktop */}
+          <div className="col-span-7 flex items-stretch">
+            <div className="w-full bg-[#F5F6F7] border border-gray-300 p-14 flex justify-between items-center">
+              <div className="text-5xl font-medium capitalize">
+                {selectedItem ? selectedItem.name : "Latino hispanic"}
+              </div>
+              
+              <div className="relative w-96 h-96 flex-shrink-0">
+                <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" stroke="#D1D5DB" strokeWidth="6" fill="none" />
+                  <circle 
+                    cx="50" 
+                    cy="50" 
+                    r="45" 
+                    stroke="#111" 
+                    strokeWidth="6" 
+                    fill="none"
+                    strokeDasharray={`${selectedItem ? selectedItem.percentage * 2.827 : 72 * 2.827} 282.7`}
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-5xl font-bold">
+                    {selectedItem ? selectedItem.percentage : 72}%
+                  </span>
+                </div>
+              </div>
             </div>
-            
-            <div className="space-y-3">
-              {/* RACE LIST */}
-              {selectedCategory === 'race' && raceList.map((race) => (
-                <div 
-                  key={race.key} 
-                  className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    race.isSelected ? 'bg-black text-white' : ''
-                  }`}
-                  onClick={() => handleItemClick(race.key, race.name, race.percentage, 'race')}
-                >
-                  <div className="flex items-center">
-                    <div className={`w-3 h-3 mr-3 ${
-                      race.isSelected ? 'bg-white' : 'border border-gray-300'
-                    }`}></div>
-                    <span className={`text-sm ${
-                      race.isSelected ? 'font-semibold text-white' : 'text-gray-700'
-                    }`}>
-                      {race.name}
-                    </span>
-                  </div>
-                  <span className={`text-sm font-semibold ${
-                    race.isSelected ? 'text-white' : 'text-gray-700'
-                  }`}>
-                    {race.percentage}%
-                  </span>
-                </div>
-              ))}
+          </div>
 
-              {/* AGE LIST */}
-              {selectedCategory === 'age' && ageList.map((age) => (
-                <div 
-                  key={age.key} 
-                  className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    age.isSelected ? 'bg-black text-white' : ''
-                  }`}
-                  onClick={() => handleItemClick(age.key, age.name, age.percentage, 'age')}
-                >
-                  <div className="flex items-center">
-                    <div className={`w-3 h-3 mr-3 ${
-                      age.isSelected ? 'bg-white' : 'border border-gray-300'
-                    }`}></div>
-                    <span className={`text-sm ${
-                      age.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+          {/* RIGHT SIDEBAR - Desktop */}
+          <div className="col-span-3 flex items-stretch p-6">
+            <div className="w-full bg-white border border-gray-300 p-6">
+              <div className="mb-4 border-b border-gray-300 pb-4">
+                <h3 className="text-sm font-semibold text-gray-500 mb-2">
+                  {selectedCategory.toUpperCase()}
+                </h3>
+                <h4 className="text-lg font-semibold">A.I. CONFIDENCE</h4>
+              </div>
+              
+              <div className="space-y-3">
+                {selectedCategory === 'race' && raceList.map((race) => (
+                  <div 
+                    key={race.key} 
+                    className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                      race.isSelected ? 'bg-black text-white' : ''
+                    }`}
+                    onClick={() => handleItemClick(race.key, race.name, race.percentage, 'race')}
+                  >
+                    <div className="flex items-center">
+                      <div className={`w-3 h-3 mr-3 ${
+                        race.isSelected ? 'bg-white' : 'border border-gray-300'
+                      }`}></div>
+                      <span className={`text-sm ${
+                        race.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                      }`}>
+                        {race.name}
+                      </span>
+                    </div>
+                    <span className={`text-sm font-semibold ${
+                      race.isSelected ? 'text-white' : 'text-gray-700'
                     }`}>
-                      {age.name}
+                      {race.percentage}%
                     </span>
                   </div>
-                  <span className={`text-sm font-semibold ${
-                    age.isSelected ? 'text-white' : 'text-gray-700'
-                  }`}>
-                    {age.percentage}%
-                  </span>
-                </div>
-              ))}
+                ))}
 
-              {/* SEX LIST */}
-              {selectedCategory === 'sex' && sexList.map((sex) => (
-                <div 
-                  key={sex.key} 
-                  className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    sex.isSelected ? 'bg-black text-white' : ''
-                  }`}
-                  onClick={() => handleItemClick(sex.key, sex.name, sex.percentage, 'sex')}
-                >
-                  <div className="flex items-center">
-                    <div className={`w-3 h-3 mr-3 ${
-                      sex.isSelected ? 'bg-white' : 'border border-gray-300'
-                    }`}></div>
-                    <span className={`text-sm ${
-                      sex.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                {selectedCategory === 'age' && ageList.map((age) => (
+                  <div 
+                    key={age.key} 
+                    className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                      age.isSelected ? 'bg-black text-white' : ''
+                    }`}
+                    onClick={() => handleItemClick(age.key, age.name, age.percentage, 'age')}
+                  >
+                    <div className="flex items-center">
+                      <div className={`w-3 h-3 mr-3 ${
+                        age.isSelected ? 'bg-white' : 'border border-gray-300'
+                      }`}></div>
+                      <span className={`text-sm ${
+                        age.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                      }`}>
+                        {age.name}
+                      </span>
+                    </div>
+                    <span className={`text-sm font-semibold ${
+                      age.isSelected ? 'text-white' : 'text-gray-700'
                     }`}>
-                      {sex.name}
+                      {age.percentage}%
                     </span>
                   </div>
-                  <span className={`text-sm font-semibold ${
-                    sex.isSelected ? 'text-white' : 'text-gray-700'
-                  }`}>
-                    {sex.percentage}%
-                  </span>
-                </div>
-              ))}
+                ))}
+
+                {selectedCategory === 'sex' && sexList.map((sex) => (
+                  <div 
+                    key={sex.key} 
+                    className={`flex justify-between items-center py-2 px-3 cursor-pointer hover:bg-gray-50 transition-colors ${
+                      sex.isSelected ? 'bg-black text-white' : ''
+                    }`}
+                    onClick={() => handleItemClick(sex.key, sex.name, sex.percentage, 'sex')}
+                  >
+                    <div className="flex items-center">
+                      <div className={`w-3 h-3 mr-3 ${
+                        sex.isSelected ? 'bg-white' : 'border border-gray-300'
+                      }`}></div>
+                      <span className={`text-sm ${
+                        sex.isSelected ? 'font-semibold text-white' : 'text-gray-700'
+                      }`}>
+                        {sex.name}
+                      </span>
+                    </div>
+                    <span className={`text-sm font-semibold ${
+                      sex.isSelected ? 'text-white' : 'text-gray-700'
+                    }`}>
+                      {sex.percentage}%
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ==================== BOTTOM NAVIGATION ==================== */}
-      <div className="pt-4 md:pt-[37px] pb-6 bg-white sticky bottom-40 md:static md:bottom-0 mb-8 md:mb-16 relative">
+      {/* ==================== BOTTOM NAVIGATION - RESPONSIVE ==================== */}
+      <div className="pt-6 sm:pt-8 md:pt-[37px] pb-6 sm:pb-8 bg-white mt-8 relative px-4 sm:px-6 md:px-8">
         <div className="flex justify-between items-center w-full">
           
           {/* BACK button */}
-          <button onClick={handleBack} className="absolute left-8 transform translate-y-10">
+          <button onClick={handleBack}>
             <div>
-              <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
-                <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 md:hidden">
+                <span className="rotate-[-45deg] text-[10px] sm:text-xs font-semibold">BACK</span>
               </div>
-              <div className="group hidden sm:flex flex-row relative justify-center items-center">
-                <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
-                <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 hidden sm:block group-hover:scale-[0.92] ease duration-300">▶</span>
-                <span className="text-sm font-semibold hidden sm:block ml-6">BACK</span>
+              <div className="group hidden md:flex flex-row relative justify-center items-center">
+                <div className="w-12 h-12 flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
+                <span className="absolute left-[15px] bottom-[13px] scale-[0.9] rotate-180 group-hover:scale-[0.92] ease duration-300">▶</span>
+                <span className="text-sm font-semibold ml-6">BACK</span>
               </div>
             </div>
           </button>
 
-          {/* Helper text */}
-          <div className="text-sm text-gray-500 text-center hidden sm:block absolute left-1/2 transform -translate-x-1/2 translate-y-6 -translate-x-[260px]">
+          {/* Helper text - Desktop only */}
+          <div className="text-xs sm:text-sm text-gray-500 text-center hidden md:block absolute left-1/2 transform -translate-x-1/2">
             If A.I. estimate is wrong, select the correct one.
           </div>
 
           {/* HOME button */}
-          <button onClick={() => navigate("/")} className="absolute right-8 transform translate-y-10">
+          <button onClick={() => navigate("/")}>
             <div>
-              <div className="w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
-                <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">HOME</span>
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 md:hidden">
+                <span className="rotate-[-45deg] text-[10px] sm:text-xs font-semibold">HOME</span>
               </div>
-              <div className="hidden sm:flex flex-row relative justify-center items-center">
-                <span className="text-sm font-semibold hidden sm:block mr-5">HOME</span>
-                <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85]"></div>
-                <span className="absolute right-[15px] bottom-[13px] scale-[0.9] hidden sm:block">▶</span>
+              <div className="hidden md:flex flex-row relative justify-center items-center">
+                <span className="text-sm font-semibold mr-5">HOME</span>
+                <div className="w-12 h-12 flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85]"></div>
+                <span className="absolute right-[15px] bottom-[13px] scale-[0.9]">▶</span>
               </div>
             </div>
           </button>

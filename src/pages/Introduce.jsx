@@ -19,7 +19,7 @@ const Introduce = () => {
 
   return (
     <main className="relative min-h-screen bg-white text-[#1A1B1C] overflow-hidden">
-      {/* Header - Responsive */}
+      {/* Custom Header for Introduce Page */}
       <header className="flex flex-row h-[64px] w-full justify-between items-start py-3 px-4 md:px-9 fixed top-0 left-0 right-0 z-[1000]">
         <div className="flex flex-col items-start">
           <div className="flex flex-row items-center scale-[0.6] md:scale-75 origin-left">
@@ -90,7 +90,7 @@ const Introduce = () => {
           </div>
         )}
 
-        {/* Spinning Diamonds - Responsive */}
+        {/* Spinning Diamonds */}
         <div className="absolute inset-0 flex items-center justify-center z-0">
           <img
             src="/Image/diamond-large.svg"
@@ -112,7 +112,6 @@ const Introduce = () => {
 
       {/* Bottom Navigation */}
       <div className="absolute bottom-6 md:bottom-8 w-full flex justify-between px-4 md:px-9 lg:px-13">
-        {/* Back Button */}
         <a href="/" className="inset-0" aria-label="Back">
           <div>
             <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
@@ -132,19 +131,16 @@ const Introduce = () => {
           </div>
         </a>
 
-        {/* Proceed Button */}
         {step === 3 && (
           <a
             href="/result"
             className="inline-block transform opacity-0 animate-proceedSlideIn"
           >
-            {/* Mobile Proceed */}
             <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 sm:hidden">
               <span className="rotate-[-45deg] text-[10px] font-semibold">
                 NEXT
               </span>
             </div>
-            {/* Desktop Proceed */}
             <div className="group hidden sm:flex flex-row relative justify-center items-center">
               <span className="text-sm font-semibold hidden sm:block mr-5">
                 PROCEED
