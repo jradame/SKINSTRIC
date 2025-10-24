@@ -12,8 +12,6 @@ const smalldiamond = "/Image/diamond-small.svg"
 
 // ========================================
 // RESULT COMPONENT
-// Main page for image capture and upload
-// Features: Live camera, gallery upload, API analysis
 // ========================================
 const Result = () => {
   // ========================================
@@ -90,13 +88,11 @@ const Result = () => {
         audio: false
       })
       
-      // Wait 2 seconds for loading screen
       setTimeout(() => {
         setCameraLoading(false)
         setStream(mediaStream)
         setShowCameraModal(true)
         
-        // Wait for modal to fully render, then attach stream
         setTimeout(() => {
           if (videoRef.current && mediaStream) {
             videoRef.current.srcObject = mediaStream
@@ -227,15 +223,15 @@ const Result = () => {
   }
 
   // ========================================
-  // DIAMOND BACKGROUND COMPONENT
+  // DIAMOND BACKGROUND COMPONENT - RESPONSIVE
   // ========================================
   const DiamondBackground = () => (
     <div className="absolute inset-0 flex items-center justify-center -z-10">
       <div 
         className="absolute animate-spin-slow bg-black opacity-90"
         style={{ 
-          width: '500px', 
-          height: '500px',
+          width: '200px', 
+          height: '200px',
           maskImage: `url(${largediamond})`,
           WebkitMaskImage: `url(${largediamond})`,
           maskSize: 'contain',
@@ -249,8 +245,8 @@ const Result = () => {
       <div 
         className="absolute animate-spin-slower bg-black opacity-90"
         style={{ 
-          width: '450px', 
-          height: '450px',
+          width: '150px', 
+          height: '150px',
           maskImage: `url(${mediumdiamond})`,
           WebkitMaskImage: `url(${mediumdiamond})`,
           maskSize: 'contain',
@@ -264,8 +260,8 @@ const Result = () => {
       <div 
         className="absolute animate-spin-slowest bg-black opacity-90"
         style={{ 
-          width: '400px', 
-          height: '400px',
+          width: '100px', 
+          height: '100px',
           maskImage: `url(${smalldiamond})`,
           WebkitMaskImage: `url(${smalldiamond})`,
           maskSize: 'contain',
@@ -284,10 +280,10 @@ const Result = () => {
   // ========================================
   return (
     <div className="min-h-screen bg-white">
-      {/* ==================== CAMERA LOADING SCREEN ==================== */}
+      {/* ==================== CAMERA LOADING SCREEN - RESPONSIVE ==================== */}
       {cameraLoading && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
-          <div className="relative w-80 h-80 mb-8">
+        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center px-4">
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 mb-8">
             <svg className="absolute inset-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
               <circle
                 cx="50"
@@ -301,7 +297,7 @@ const Result = () => {
             </svg>
             
             <div className="absolute inset-0 flex items-center justify-center">
-              <svg className="w-32 h-32 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 15.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5zm0-5.5c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z"/>
                 <path d="M20 5h-3.172l-1.414-1.414C15.039 3.211 14.535 3 14 3h-4c-.535 0-1.039.211-1.414.586L7.172 5H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 14H4V7h4.414l1.707-1.707C10.309 5.105 10.638 5 11 5h2c.362 0 .691.105.879.293L15.586 7H20v12z"/>
                 <circle cx="18" cy="8.5" r="1" fill="currentColor"/>
@@ -309,26 +305,26 @@ const Result = () => {
             </div>
           </div>
           
-          <p className="text-xl text-gray-500 tracking-wider mb-32">SETTING UP CAMERA ...</p>
+          <p className="text-base sm:text-lg md:text-xl text-gray-500 tracking-wider mb-16 sm:mb-24 md:mb-32">SETTING UP CAMERA ...</p>
           
           <img 
             src="/Image/camerainfo.svg" 
             alt="Camera Instructions" 
-            className="absolute bottom-20 w-auto h-auto max-w-[600px]"
+            className="absolute bottom-10 sm:bottom-16 md:bottom-20 w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
           />
         </div>
       )}
 
-      {/* ==================== LOADING SCREEN ==================== */}
+      {/* ==================== LOADING SCREEN - RESPONSIVE ==================== */}
       {loading ? (
         <div className="fixed inset-0 w-screen h-screen bg-white z-[9999] flex flex-col justify-center items-center">
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center scale-50 sm:scale-75 md:scale-100">
             <img src={largediamond} alt="Large-Diamond" className="animate-spin-slow" />
             <img src={mediumdiamond} alt="Medium-Diamond" className="animate-spin-slower absolute" />
             <img src={smalldiamond} alt="Small-Diamond" className="animate-spin-slowest absolute" />
             
             <div className="absolute flex flex-col items-center justify-center z-10">
-              <p className="text-lg font-semibold text-[#1A1B1C] whitespace-nowrap">
+              <p className="text-sm sm:text-base md:text-lg font-semibold text-[#1A1B1C] whitespace-nowrap">
                 PREPARING YOUR ANALYSIS
               </p>
               <div className="flex space-x-2 mt-3">
@@ -341,11 +337,11 @@ const Result = () => {
         </div>
       ) : (
         <div>
-          {/* ==================== HEADER ==================== */}
-          <div className="flex flex-row h-[64px] w-full justify-between py-3 mb-3 relative z-[1000]">
-            <div className="flex flex-row pt-1 scale-75 justify-center items-center">
+          {/* ==================== HEADER - RESPONSIVE ==================== */}
+          <div className="flex flex-row h-[64px] w-full justify-between items-center py-3 px-4 sm:px-6 md:px-8 mb-3 relative z-[1000]">
+            <div className="flex flex-row items-center scale-[0.6] sm:scale-[0.7] md:scale-75 origin-left">
               <a 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C] z-1000" 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C]" 
                 href="/"
               >
                 SKINSTRIC
@@ -354,24 +350,109 @@ const Result = () => {
               <p className="text-[#1a1b1c83] text-opacity-70 font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
               <img className="w-[4px] h-[17px]" src={rightbracket} alt="right-bracket" />
             </div>
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors disabled:pointer-events-none text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 mx-4 scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors h-8 sm:h-9 px-3 sm:px-4 py-2 scale-[0.7] sm:scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
               ENTER CODE
             </button>
           </div>
 
-          {/* ==================== MAIN CONTENT ==================== */}
-          <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-[64px] justify-center">
-            <div className="absolute top-2 left-9 md:left-8 text-left">
-              <p className="font-semibold text-xs md:text-sm">TO START ANALYSIS</p>
+          {/* ==================== MAIN CONTENT - RESPONSIVE ==================== */}
+          <div className="min-h-[92vh] flex flex-col bg-white relative md:pt-[64px] justify-center px-4 sm:px-6">
+            <div className="absolute top-2 left-4 sm:left-6 md:left-9 text-left">
+              <p className="font-semibold text-[10px] sm:text-xs md:text-sm">TO START ANALYSIS</p>
             </div>
 
-            <div className="flex-[0.4] md:flex-1 flex flex-col items-center xl:justify-center relative mb-0 md:mb-30">
+            {/* Mobile/Tablet: Stacked Layout */}
+            <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-20 lg:hidden relative z-20 mt-12">
+              
+              {/* CAMERA SECTION - MOBILE */}
+              <div className="relative flex flex-col items-center">
+                <DiamondBackground />
+                
+                <img 
+                  src="/Image/camera-left.svg" 
+                  alt="Camera Icon" 
+                  className="w-[200px] sm:w-[250px] h-auto cursor-pointer"
+                  onClick={handleCameraClick}
+                />
+
+                <div className="mt-4 text-center">
+                  <p className="text-xs sm:text-sm font-normal">ALLOW A.I.</p>
+                  <p className="text-xs sm:text-sm font-normal">TO SCAN YOUR FACE</p>
+                </div>
+              </div>
+
+              {/* GALLERY SECTION - MOBILE */}
+              <div className="relative flex flex-col items-center">
+                <DiamondBackground />
+                
+                <img 
+                  src="/Image/gallery-right.svg" 
+                  alt="Gallery Icon" 
+                  className="w-[200px] sm:w-[250px] h-auto cursor-pointer"
+                  onClick={() => galleryInputRef.current?.click()}
+                />
+
+                <div className="mt-4 text-center">
+                  <p className="text-xs sm:text-sm font-normal">ALLOW A.I.</p>
+                  <p className="text-xs sm:text-sm font-normal">ACCESS GALLERY</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop: Side-by-Side Layout */}
+            <div className="hidden lg:flex lg:flex-[0.4] xl:flex-1 flex-col items-center xl:justify-center relative mb-0 md:mb-30">
               
               <div className="flex justify-center items-center gap-[300px] absolute top-[240px] w-full z-20">
                 
-                {/* ==================== CAMERA SECTION ==================== */}
+                {/* CAMERA SECTION - DESKTOP */}
                 <div className="relative flex flex-col items-center">
-                  <DiamondBackground />
+                  <div className="absolute inset-0 flex items-center justify-center -z-10">
+                    <div 
+                      className="absolute animate-spin-slow bg-black opacity-90"
+                      style={{ 
+                        width: '500px', 
+                        height: '500px',
+                        maskImage: `url(${largediamond})`,
+                        WebkitMaskImage: `url(${largediamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                    <div 
+                      className="absolute animate-spin-slower bg-black opacity-90"
+                      style={{ 
+                        width: '450px', 
+                        height: '450px',
+                        maskImage: `url(${mediumdiamond})`,
+                        WebkitMaskImage: `url(${mediumdiamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                    <div 
+                      className="absolute animate-spin-slowest bg-black opacity-90"
+                      style={{ 
+                        width: '400px', 
+                        height: '400px',
+                        maskImage: `url(${smalldiamond})`,
+                        WebkitMaskImage: `url(${smalldiamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                  </div>
                   
                   <img 
                     src="/Image/camera-left.svg" 
@@ -393,9 +474,55 @@ const Result = () => {
                   </div>
                 </div>
 
-                {/* ==================== GALLERY SECTION ==================== */}
+                {/* GALLERY SECTION - DESKTOP */}
                 <div className="relative flex flex-col items-center">
-                  <DiamondBackground />
+                  <div className="absolute inset-0 flex items-center justify-center -z-10">
+                    <div 
+                      className="absolute animate-spin-slow bg-black opacity-90"
+                      style={{ 
+                        width: '500px', 
+                        height: '500px',
+                        maskImage: `url(${largediamond})`,
+                        WebkitMaskImage: `url(${largediamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                    <div 
+                      className="absolute animate-spin-slower bg-black opacity-90"
+                      style={{ 
+                        width: '450px', 
+                        height: '450px',
+                        maskImage: `url(${mediumdiamond})`,
+                        WebkitMaskImage: `url(${mediumdiamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                    <div 
+                      className="absolute animate-spin-slowest bg-black opacity-90"
+                      style={{ 
+                        width: '400px', 
+                        height: '400px',
+                        maskImage: `url(${smalldiamond})`,
+                        WebkitMaskImage: `url(${smalldiamond})`,
+                        maskSize: 'contain',
+                        WebkitMaskSize: 'contain',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskPosition: 'center',
+                        WebkitMaskPosition: 'center'
+                      }}
+                    />
+                  </div>
                   
                   <img 
                     src="/Image/gallery-right.svg" 
@@ -418,7 +545,7 @@ const Result = () => {
                 </div>
               </div>
 
-              {/* ==================== PREVIEW BOX ==================== */}
+              {/* PREVIEW BOX - DESKTOP */}
               <div className="absolute top-[-75px] right-7 md:top-[-50px] md:right-8 transition-opacity duration-300 opacity-100">
                 <h1 className="text-xs md:text-sm font-normal mb-1">Preview</h1>
                 <div className="w-24 h-24 md:w-32 md:h-32 border border-gray-300 overflow-hidden bg-gray-50">
@@ -442,13 +569,36 @@ const Result = () => {
               />
             </div>
 
-            {/* ==================== BACK BUTTON ==================== */}
+            {/* PREVIEW BOX - MOBILE */}
+            <div className="lg:hidden mt-8 flex flex-col items-center">
+              <h1 className="text-xs sm:text-sm font-normal mb-2">Preview</h1>
+              <div className="w-24 h-24 sm:w-32 sm:h-32 border border-gray-300 overflow-hidden bg-gray-50">
+                {preview && <img src={preview} alt="Preview" className="w-full h-full object-cover" />}
+              </div>
+            </div>
+
+            <input
+              ref={cameraInputRef}
+              accept="image/*"
+              className="hidden lg:hidden"
+              type="file"
+              onChange={handleChange}
+            />
+            <input
+              ref={galleryInputRef}
+              accept="image/*"
+              className="hidden lg:hidden"
+              type="file"
+              onChange={handleChange}
+            />
+
+            {/* ==================== BACK BUTTON - RESPONSIVE ==================== */}
             <div className="pt-4 md:pt-0 pb-8 bg-white sticky md:static bottom-30.5 mb-0 md:mb-0">
-              <div className="absolute bottom-8 w-full flex justify-between md:px-9 px-13">
+              <div className="absolute bottom-6 sm:bottom-8 w-full flex justify-between px-4 sm:px-6 md:px-9 lg:px-13">
                 <a className="relative" aria-label="Back" href="/introduce">
                   <div>
-                    <div className="relative w-12 h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
-                      <span className="rotate-[-45deg] text-xs font-semibold sm:hidden">BACK</span>
+                    <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center border border-[#1A1B1C] rotate-45 scale-[1] sm:hidden">
+                      <span className="rotate-[-45deg] text-[10px] font-semibold sm:hidden">BACK</span>
                     </div>
                     <div className="group hidden sm:flex flex-row relative justify-center items-center">
                       <div className="w-12 h-12 hidden sm:flex justify-center border border-[#1A1B1C] rotate-45 scale-[0.85] group-hover:scale-[0.92] ease duration-300"></div>
@@ -465,16 +615,16 @@ const Result = () => {
 
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* ==================== CAMERA PERMISSION POPUP ==================== */}
+      {/* ==================== CAMERA PERMISSION POPUP - RESPONSIVE ==================== */}
       {showCameraPopup && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" onClick={handleDenyCamera} />
-          <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none">
+          <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none p-4">
             <div className="relative pointer-events-auto">
               <img 
                 src="/Image/float-info.svg" 
                 alt="Camera Permission" 
-                className="w-auto h-auto max-w-[90vw]"
+                className="w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
               />
               <button 
                 onClick={handleDenyCamera}
@@ -495,7 +645,7 @@ const Result = () => {
         </>
       )}
 
-      {/* ==================== LIVE CAMERA MODAL ==================== */}
+      {/* ==================== LIVE CAMERA MODAL - RESPONSIVE ==================== */}
       {showCameraModal && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-90 z-[9998]" />
@@ -510,16 +660,16 @@ const Result = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex justify-between items-center p-4 bg-[#1A1B1C]">
+              <div className="flex justify-between items-center p-3 sm:p-4 bg-[#1A1B1C]">
                 <button 
                   onClick={handleCloseCameraModal}
-                  className="px-4 py-2 bg-gray-700 text-white rounded text-sm font-medium hover:bg-gray-600 transition-colors"
+                  className="px-3 sm:px-4 py-2 bg-gray-700 text-white rounded text-xs sm:text-sm font-medium hover:bg-gray-600 transition-colors"
                 >
                   CANCEL
                 </button>
                 <button 
                   onClick={handleCapturePhoto}
-                  className="px-6 py-2 bg-[#4a9eff] text-white rounded text-sm font-medium hover:bg-[#3a8eef] transition-colors"
+                  className="px-4 sm:px-6 py-2 bg-[#4a9eff] text-white rounded text-xs sm:text-sm font-medium hover:bg-[#3a8eef] transition-colors"
                 >
                   CAPTURE
                 </button>
@@ -529,19 +679,19 @@ const Result = () => {
         </>
       )}
 
-      {/* ==================== SUCCESS POPUP ==================== */}
+      {/* ==================== SUCCESS POPUP - RESPONSIVE ==================== */}
       {showSuccessPopup && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
-          <div className="fixed inset-0 flex items-center justify-center z-[9999]">
-            <div className="bg-[#2a2a2a] text-white p-6 rounded-lg max-w-sm mx-4 text-center">
+          <div className="fixed inset-0 flex items-center justify-center z-[9999] p-4">
+            <div className="bg-[#2a2a2a] text-white p-6 rounded-lg max-w-sm w-full mx-4 text-center">
               <div className="mb-4">
-                <p className="text-sm text-gray-300 mb-2">skinstric-wandag.vercel.app says</p>
-                <p className="text-white font-medium">Image analyzed successfully!</p>
+                <p className="text-xs sm:text-sm text-gray-300 mb-2">skinstric-wandag.vercel.app says</p>
+                <p className="text-sm sm:text-base text-white font-medium">Image analyzed successfully!</p>
               </div>
               <button 
                 onClick={handleSuccessOK}
-                className="px-8 py-2 bg-[#4a9eff] text-white rounded-full text-sm font-medium hover:bg-[#3a8eef] transition-colors"
+                className="px-6 sm:px-8 py-2 bg-[#4a9eff] text-white rounded-full text-xs sm:text-sm font-medium hover:bg-[#3a8eef] transition-colors"
               >
                 OK
               </button>
@@ -554,4 +704,3 @@ const Result = () => {
 }
 
 export default Result
-
