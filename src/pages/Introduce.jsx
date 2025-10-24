@@ -33,7 +33,7 @@ const Introduce = () => {
               [ INTRO ]
             </p>
           </div>
-          <p className="font-bold text-[9px] md:text-xs mt-1 ml-4 md:ml-8 text-black">
+          <p className="font-bold text-[9px] md:text-xs mt-1 ml-6 md:ml-3 text-black">
             TO START ANALYSIS
           </p>
         </div>
