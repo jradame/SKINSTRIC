@@ -23,13 +23,17 @@ const Select = () => {
       </div>
 
       {/* Title Section - Responsive */}
-      <div className="absolute top-[60px] sm:top-[65px] left-4 sm:left-6 md:left-8 text-left px-4 sm:px-0">
-        <h1 className="text-sm sm:text-base font-semibold leading-[24px] tracking-tight">A.I. ANALYSIS</h1>
-        <p className="text-xs sm:text-sm mt-1 text-gray-600 uppercase leading-[20px] sm:leading-[24px]">
-          A.I. has estimated the following.<br />
-          Fix estimated information if needed.
-        </p>
-      </div>
+    <div className="absolute top-[60px] sm:top-[65px] left-[8px] md:left-[12px] text-left">
+  <h1 className="text-sm sm:text-base font-semibold leading-[24px] tracking-tight">A.I. ANALYSIS</h1>
+  <p className="text-xs sm:text-sm mt-1 text-gray-600 uppercase leading-[20px] sm:leading-[24px]">
+    A.I. has estimated the following.<br />
+    Fix estimated information if needed.
+  </p>
+</div>
+
+
+
+
 
       {/* Main Content - Responsive */}
       <div className="min-h-[65vh] flex flex-col items-center justify-center bg-white px-4 pt-32 sm:pt-24">
