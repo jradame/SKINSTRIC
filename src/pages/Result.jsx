@@ -52,17 +52,17 @@ const Result = () => {
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
       const img = new Image()
-      
+
       img.onload = () => {
         const ratio = Math.min(maxWidth / img.width, maxWidth / img.height)
         canvas.width = img.width * ratio
         canvas.height = img.height * ratio
-        
+
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
         const compressedBase64 = canvas.toDataURL('image/jpeg', quality)
         resolve(compressedBase64)
       }
-      
+
       img.src = URL.createObjectURL(file)
     })
   }
@@ -77,22 +77,22 @@ const Result = () => {
   const handleAllowCamera = async () => {
     setShowCameraPopup(false)
     setCameraLoading(true)
-    
+
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { 
+        video: {
           facingMode: 'user',
           width: { ideal: 1280 },
           height: { ideal: 720 }
         },
         audio: false
       })
-      
+
       setTimeout(() => {
         setCameraLoading(false)
         setStream(mediaStream)
         setShowCameraModal(true)
-        
+
         setTimeout(() => {
           if (videoRef.current && mediaStream) {
             videoRef.current.srcObject = mediaStream
@@ -100,7 +100,7 @@ const Result = () => {
           }
         }, 200)
       }, 2000)
-      
+
     } catch (error) {
       console.error('Camera access denied:', error)
       setCameraLoading(false)
@@ -122,21 +122,21 @@ const Result = () => {
 
   const handleCapturePhoto = async () => {
     if (!videoRef.current || !canvasRef.current) return
-    
+
     const video = videoRef.current
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
-    
+
     canvas.width = video.videoWidth
     canvas.height = video.videoHeight
-    
+
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
     const imageSrc = canvas.toDataURL('image/jpeg', 0.9)
-    
+
     setPreview(imageSrc)
     handleCloseCameraModal()
     setLoading(true)
-    
+
     try {
       await sendToAPI(imageSrc)
     } catch (error) {
@@ -152,7 +152,7 @@ const Result = () => {
   const handleChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
-    
+
     try {
       const compressedBase64 = await compressImage(file)
       setPreview(compressedBase64)
@@ -178,20 +178,20 @@ const Result = () => {
   const sendToAPI = async (base64) => {
     try {
       console.log('Sending image to API...')
-      
+
       localStorage.setItem('uploadedImage', base64)
-      
+
       let base64Data = base64
       if (base64.includes(',')) {
         base64Data = base64.split(',')[1]
       }
-      
+
       const payload = {
         image: base64Data
       }
-      
+
       console.log('Sending payload with image length:', base64Data.length)
-      
+
       const response = await fetch('https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo', {
         method: 'POST',
         headers: {
@@ -202,11 +202,11 @@ const Result = () => {
 
       const result = await response.json()
       console.log('API Response:', result)
-      
+
       if (!response.ok || !result.success) {
         throw new Error(result.message || `API Error: ${response.status}`)
       }
-      
+
       if (result.data) {
         localStorage.setItem('skinstricApiResponse', JSON.stringify(result.data))
         setLoading(false)
@@ -214,7 +214,7 @@ const Result = () => {
       } else {
         throw new Error('Invalid API response format')
       }
-      
+
     } catch (error) {
       console.error('Analysis failed:', error)
       setLoading(false)
@@ -227,10 +227,10 @@ const Result = () => {
   // ========================================
   const DiamondBackground = () => (
     <div className="absolute inset-0 flex items-center justify-center -z-10">
-      <div 
+      <div
         className="absolute animate-spin-slow bg-black opacity-90"
-        style={{ 
-          width: '200px', 
+        style={{
+          width: '200px',
           height: '200px',
           maskImage: `url(${largediamond})`,
           WebkitMaskImage: `url(${largediamond})`,
@@ -242,10 +242,10 @@ const Result = () => {
           WebkitMaskPosition: 'center'
         }}
       />
-      <div 
+      <div
         className="absolute animate-spin-slower bg-black opacity-90"
-        style={{ 
-          width: '150px', 
+        style={{
+          width: '150px',
           height: '150px',
           maskImage: `url(${mediumdiamond})`,
           WebkitMaskImage: `url(${mediumdiamond})`,
@@ -257,10 +257,10 @@ const Result = () => {
           WebkitMaskPosition: 'center'
         }}
       />
-      <div 
+      <div
         className="absolute animate-spin-slowest bg-black opacity-90"
-        style={{ 
-          width: '100px', 
+        style={{
+          width: '100px',
           height: '100px',
           maskImage: `url(${smalldiamond})`,
           WebkitMaskImage: `url(${smalldiamond})`,
@@ -295,21 +295,21 @@ const Result = () => {
                 strokeDasharray="2 4"
               />
             </svg>
-            
+
             <div className="absolute inset-0 flex items-center justify-center">
               <svg className="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 15.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5zm0-5.5c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z"/>
-                <path d="M20 5h-3.172l-1.414-1.414C15.039 3.211 14.535 3 14 3h-4c-.535 0-1.039.211-1.414.586L7.172 5H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 14H4V7h4.414l1.707-1.707C10.309 5.105 10.638 5 11 5h2c.362 0 .691.105.879.293L15.586 7H20v12z"/>
-                <circle cx="18" cy="8.5" r="1" fill="currentColor"/>
+                <path d="M12 15.5c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5 3.5 1.567 3.5 3.5-1.567 3.5-3.5 3.5zm0-5.5c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2z" />
+                <path d="M20 5h-3.172l-1.414-1.414C15.039 3.211 14.535 3 14 3h-4c-.535 0-1.039.211-1.414.586L7.172 5H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm0 14H4V7h4.414l1.707-1.707C10.309 5.105 10.638 5 11 5h2c.362 0 .691.105.879.293L15.586 7H20v12z" />
+                <circle cx="18" cy="8.5" r="1" fill="currentColor" />
               </svg>
             </div>
           </div>
-          
+
           <p className="text-base sm:text-lg md:text-xl text-gray-500 tracking-wider mb-16 sm:mb-24 md:mb-32">SETTING UP CAMERA ...</p>
-          
-          <img 
-            src="/Image/camerainfo.svg" 
-            alt="Camera Instructions" 
+
+          <img
+            src="/Image/camerainfo.svg"
+            alt="Camera Instructions"
             className="absolute bottom-10 sm:bottom-16 md:bottom-20 w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
           />
         </div>
@@ -322,15 +322,15 @@ const Result = () => {
             <img src={largediamond} alt="Large-Diamond" className="animate-spin-slow" />
             <img src={mediumdiamond} alt="Medium-Diamond" className="animate-spin-slower absolute" />
             <img src={smalldiamond} alt="Small-Diamond" className="animate-spin-slowest absolute" />
-            
+
             <div className="absolute flex flex-col items-center justify-center z-10">
               <p className="text-sm sm:text-base md:text-lg font-semibold text-[#1A1B1C] whitespace-nowrap">
                 PREPARING YOUR ANALYSIS
               </p>
               <div className="flex space-x-2 mt-3">
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
             </div>
           </div>
@@ -341,8 +341,8 @@ const Result = () => {
           <header className="flex flex-row h-[64px] w-full justify-between items-start py-3 px-4 md:px-9 mb-3 relative z-[1000]">
             <div className="flex flex-col items-start">
               <div className="flex flex-row items-center scale-[0.6] md:scale-75 origin-left">
-                <a 
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C]" 
+                <a
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C]"
                   href="/"
                 >
                   SKINSTRIC
@@ -366,14 +366,14 @@ const Result = () => {
 
             {/* Mobile/Tablet: Stacked Layout */}
             <div className="flex flex-col items-center gap-12 sm:gap-16 md:gap-20 lg:hidden relative z-20 mt-12">
-              
+
               {/* CAMERA SECTION - MOBILE */}
               <div className="relative flex flex-col items-center">
                 <DiamondBackground />
-                
-                <img 
-                  src="/Image/camera-left.svg" 
-                  alt="Camera Icon" 
+
+                <img
+                  src="/Image/camera-left.svg"
+                  alt="Camera Icon"
                   className="w-[200px] sm:w-[250px] h-auto cursor-pointer"
                   onClick={handleCameraClick}
                 />
@@ -387,10 +387,10 @@ const Result = () => {
               {/* GALLERY SECTION - MOBILE */}
               <div className="relative flex flex-col items-center">
                 <DiamondBackground />
-                
-                <img 
-                  src="/Image/gallery-right.svg" 
-                  alt="Gallery Icon" 
+
+                <img
+                  src="/Image/gallery-right.svg"
+                  alt="Gallery Icon"
                   className="w-[200px] sm:w-[250px] h-auto cursor-pointer"
                   onClick={() => galleryInputRef.current?.click()}
                 />
@@ -404,16 +404,16 @@ const Result = () => {
 
             {/* Desktop: Side-by-Side Layout */}
             <div className="hidden lg:flex lg:flex-[0.4] xl:flex-1 flex-col items-center xl:justify-center relative mb-0 md:mb-30">
-              
+
               <div className="flex justify-center items-center gap-[300px] absolute top-[240px] w-full z-20">
-                
+
                 {/* CAMERA SECTION - DESKTOP */}
                 <div className="relative flex flex-col items-center">
                   <div className="absolute inset-0 flex items-center justify-center -z-10">
-                    <div 
+                    <div
                       className="absolute animate-spin-slow bg-black opacity-90"
-                      style={{ 
-                        width: '500px', 
+                      style={{
+                        width: '500px',
                         height: '500px',
                         maskImage: `url(${largediamond})`,
                         WebkitMaskImage: `url(${largediamond})`,
@@ -425,10 +425,10 @@ const Result = () => {
                         WebkitMaskPosition: 'center'
                       }}
                     />
-                    <div 
+                    <div
                       className="absolute animate-spin-slower bg-black opacity-90"
-                      style={{ 
-                        width: '450px', 
+                      style={{
+                        width: '450px',
                         height: '450px',
                         maskImage: `url(${mediumdiamond})`,
                         WebkitMaskImage: `url(${mediumdiamond})`,
@@ -440,10 +440,10 @@ const Result = () => {
                         WebkitMaskPosition: 'center'
                       }}
                     />
-                    <div 
+                    <div
                       className="absolute animate-spin-slowest bg-black opacity-90"
-                      style={{ 
-                        width: '400px', 
+                      style={{
+                        width: '400px',
                         height: '400px',
                         maskImage: `url(${smalldiamond})`,
                         WebkitMaskImage: `url(${smalldiamond})`,
@@ -456,10 +456,10 @@ const Result = () => {
                       }}
                     />
                   </div>
-                  
-                  <img 
-                    src="/Image/camera-left.svg" 
-                    alt="Camera Icon" 
+
+                  <img
+                    src="/Image/camera-left.svg"
+                    alt="Camera Icon"
                     className="w-[300px] h-[150px] cursor-pointer"
                     onClick={handleCameraClick}
                   />
@@ -469,9 +469,9 @@ const Result = () => {
                       <p className="-translate-x-[34px]">ALLOW A.I.</p>
                       <p>TO SCAN YOUR FACE</p>
                     </div>
-                    <img 
-                      src="/Image/scanline.svg" 
-                      alt="Scan Line" 
+                    <img
+                      src="/Image/scanline.svg"
+                      alt="Scan Line"
                       className="w-[60px] h-auto translate-y-[12px] rotate-180"
                     />
                   </div>
@@ -480,10 +480,10 @@ const Result = () => {
                 {/* GALLERY SECTION - DESKTOP */}
                 <div className="relative flex flex-col items-center">
                   <div className="absolute inset-0 flex items-center justify-center -z-10">
-                    <div 
+                    <div
                       className="absolute animate-spin-slow bg-black opacity-90"
-                      style={{ 
-                        width: '500px', 
+                      style={{
+                        width: '500px',
                         height: '500px',
                         maskImage: `url(${largediamond})`,
                         WebkitMaskImage: `url(${largediamond})`,
@@ -495,10 +495,10 @@ const Result = () => {
                         WebkitMaskPosition: 'center'
                       }}
                     />
-                    <div 
+                    <div
                       className="absolute animate-spin-slower bg-black opacity-90"
-                      style={{ 
-                        width: '450px', 
+                      style={{
+                        width: '450px',
                         height: '450px',
                         maskImage: `url(${mediumdiamond})`,
                         WebkitMaskImage: `url(${mediumdiamond})`,
@@ -510,10 +510,10 @@ const Result = () => {
                         WebkitMaskPosition: 'center'
                       }}
                     />
-                    <div 
+                    <div
                       className="absolute animate-spin-slowest bg-black opacity-90"
-                      style={{ 
-                        width: '400px', 
+                      style={{
+                        width: '400px',
                         height: '400px',
                         maskImage: `url(${smalldiamond})`,
                         WebkitMaskImage: `url(${smalldiamond})`,
@@ -526,10 +526,10 @@ const Result = () => {
                       }}
                     />
                   </div>
-                  
-                  <img 
-                    src="/Image/gallery-right.svg" 
-                    alt="Gallery Icon" 
+
+                  <img
+                    src="/Image/gallery-right.svg"
+                    alt="Gallery Icon"
                     className="w-[300px] h-[150px] cursor-pointer"
                     onClick={() => galleryInputRef.current?.click()}
                   />
@@ -539,9 +539,9 @@ const Result = () => {
                       <p className="mb-1 translate-x-[10px] translate-y-[92px]">ALLOW A.I.</p>
                       <p className="translate-x-[-38px] translate-y-[88px]">ACCESS GALLERY</p>
                     </div>
-                    <img 
-                      src="/Image/gallery-line.svg" 
-                      alt="Gallery Line" 
+                    <img
+                      src="/Image/gallery-line.svg"
+                      alt="Gallery Line"
                       className="w-[60px] h-auto translate-x-[88px] translate-y-[8px]"
                     />
                   </div>
@@ -624,19 +624,19 @@ const Result = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" onClick={handleDenyCamera} />
           <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none p-4">
             <div className="relative pointer-events-auto">
-              <img 
-                src="/Image/float-info.svg" 
-                alt="Camera Permission" 
+              <img
+                src="/Image/float-info.svg"
+                alt="Camera Permission"
                 className="w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
               />
-              <button 
+              <button
                 onClick={handleDenyCamera}
                 className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
                 aria-label="Deny camera"
               >
                 <span className="sr-only">Deny</span>
               </button>
-              <button 
+              <button
                 onClick={handleAllowCamera}
                 className="absolute bottom-[8%] right-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
                 aria-label="Allow camera"
@@ -664,13 +664,13 @@ const Result = () => {
                 />
               </div>
               <div className="flex justify-between items-center p-3 sm:p-4 bg-[#1A1B1C]">
-                <button 
+                <button
                   onClick={handleCloseCameraModal}
                   className="px-3 sm:px-4 py-2 bg-gray-700 text-white rounded text-xs sm:text-sm font-medium hover:bg-gray-600 transition-colors"
                 >
                   CANCEL
                 </button>
-                <button 
+                <button
                   onClick={handleCapturePhoto}
                   className="px-4 sm:px-6 py-2 bg-[#4a9eff] text-white rounded text-xs sm:text-sm font-medium hover:bg-[#3a8eef] transition-colors"
                 >
@@ -692,7 +692,7 @@ const Result = () => {
                 <p className="text-xs sm:text-sm text-gray-300 mb-2">skinstric-wandag.vercel.app says</p>
                 <p className="text-sm sm:text-base text-white font-medium">Image analyzed successfully!</p>
               </div>
-              <button 
+              <button
                 onClick={handleSuccessOK}
                 className="px-6 sm:px-8 py-2 bg-[#4a9eff] text-white rounded-full text-xs sm:text-sm font-medium hover:bg-[#3a8eef] transition-colors"
               >
