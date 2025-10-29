@@ -1,12 +1,45 @@
-# React + Vite
+# SKINTRIC
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI-powered skin analysis app that creates personalized skincare routines.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+SKINTRIC uses AI to analyze your skin and give you a custom skincare routine. You can take a photo with your camera or upload one from your gallery, and the app analyzes your skin type, concerns, and demographics to recommend products.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Camera integration** - Take photos directly in the browser using MediaStream API
+- **Image capture** - Capture and preview images with base64 encoding
+- **AI analysis** - Sends images to demographics analysis API endpoint
+- **Multiple pages** - Home intro, analysis page with camera/upload, and results page
+- **Responsive design** - Works on mobile, tablet, and desktop
+- **Clean UI** - Minimalist design with Tailwind CSS
+
+## Built with
+
+- React
+- Vite
+- Tailwind CSS
+- JavaScript/JSX
+
+## Pages
+
+1. **Home (Intro)** - Landing page with hero section and navigation
+2. **Introduce/Analysis** - Camera capture or gallery upload for skin photos
+3. **Results** - AI analysis results and recommendations
+
+## Setup
+
+
+## Deployment
+
+Hosted on Vercel. Push to main branch to deploy automatically.
+
+## How it works
+
+The app captures your photo through the camera or file upload, converts it to base64, and sends it to the AI analysis endpoint. The API processes your skin data and returns personalized recommendations based on your unique skin profile.
+
+---
+
+Made by me while learning React and working with camera APIs in the browser.
+
