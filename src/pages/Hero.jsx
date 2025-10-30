@@ -12,22 +12,25 @@ const Hero = () => {
   return (
     <main className="relative w-full min-h-screen bg-white overflow-hidden text-[#1A1B1C] antialiased">
       {/* Navbar - Fully Responsive */}
-      <header className="flex flex-row h-[64px] w-full justify-between items-center py-3 px-4 sm:px-6 mb-3 relative z-[1000]">
-        <div className="flex flex-row items-center scale-75 sm:scale-100">
-          <a
-            href="/"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors px-2 sm:px-4 py-2 font-semibold text-xs sm:text-sm leading-[16px]"
-          >
-            SKINSTRIC
-          </a>
-          <p className="text-[#1a1b1c83] font-semibold text-xs sm:text-sm ml-1 sm:ml-1.5 mr-1 sm:mr-1.5">
-            [ INTRO ]
-          </p>
-        </div>
-        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors text-[#FCFCFC] text-[8px] sm:text-[10px] bg-[#1A1B1C] h-8 sm:h-9 px-3 sm:px-4 py-2 leading-[16px]">
-          ENTER CODE
-        </button>
-      </header>
+      <header className="flex flex-row h-[64px] min-h-[64px] max-h-[64px] w-full justify-between items-center py-5 px-4 sm:px-6 mb-3 relative z-[1000]">
+  <div className="flex flex-row items-center scale-75 sm:scale-100">
+    <a
+      href="/"
+      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors px-2 sm:px-4 py-2 font-normal text-xs sm:text-sm leading-[16px]"
+    >
+      SKINSTRIC
+    </a>
+    <p className="text-[#1a1b1c83] font-normal text-xs sm:text-sm ml-1 sm:ml-1.5 mr-1 sm:mr-1.5">
+      [ INTRO ]
+    </p>
+  </div>
+  <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-normal transition-colors text-[#FCFCFC] text-[8px] sm:text-[10px] bg-[#1A1B1C] h-8 sm:h-9 px-3 sm:px-4 py-2 leading-[16px]">
+    ENTER CODE
+  </button>
+</header>
+
+
+
 
       {/* Hero Section */}
       <div className="relative w-full">
