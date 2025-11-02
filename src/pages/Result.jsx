@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-
-
-
 // ========================================
 // IMAGE ASSETS
 // ========================================
@@ -339,26 +336,25 @@ const Result = () => {
         </div>
       ) : (
         <div>
-          {/* ==================== HEADER - RESPONSIVE (MATCHES INTRODUCE) ==================== */}
-          <header className="flex flex-row h-[64px] w-full justify-between items-start py-3 px-4 md:px-9 mb-3 relative z-[1000]">
-            <div className="flex flex-col items-start">
-              <div className="flex flex-row items-center scale-[0.6] md:scale-75 origin-left">
+          {/* ==================== HEADER - MATCHES OTHER PAGES ==================== */}
+          <header className="flex flex-row h-[64px] min-h-[64px] max-h-[64px] w-full justify-between items-center py-5 px-4 sm:px-6 mb-3 mt-2 relative z-[1000]">
+            <div className="flex flex-col justify-center">
+              <div className="flex flex-row items-center scale-75 sm:scale-100">
                 <a
-                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 line-clamp-4 leading-[16px] text-[#1A1B1C]"
                   href="/"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors px-2 sm:px-4 py-2 font-normal text-xs sm:text-sm leading-[16px]"
                 >
                   SKINSTRIC
                 </a>
-                <img className="w-[4px] h-[17px]" src={leftbracket} alt="left-bracket" />
-                <p className="text-[#1a1b1c83] font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
-                <img className="w-[4px] h-[17px]" src={rightbracket} alt="right-bracket" />
+                <p className="text-[#1a1b1c83] font-normal text-xs sm:text-sm ml-1 sm:ml-1.5 mr-1 sm:mr-1.5">
+                  [ INTRO ]
+                </p>
               </div>
-              <p className="font-bold text-[9px] md:text-xs mt-1 ml-6 md:ml-3 text-black">
+              <p className="font-normal text-[9px] sm:text-xs ml-3 sm:ml-4 text-black -mt-1">
                 TO START ANALYSIS
               </p>
             </div>
-
-            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors text-[#FCFCFC] text-[10px] bg-[#1A1B1C] h-9 px-4 py-2 scale-[0.7] md:scale-[0.8] leading-[16px]">
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-normal transition-colors text-[#FCFCFC] text-[8px] sm:text-[10px] bg-[#1A1B1C] h-8 sm:h-9 px-3 sm:px-4 py-2 leading-[16px]">
               ENTER CODE
             </button>
           </header>
@@ -633,7 +629,7 @@ const Result = () => {
               />
               <button
                 onClick={handleDenyCamera}
-                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
+                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-gray-400 opacity-50 cursor-pointer rounded"
                 aria-label="Deny camera"
               >
                 <span className="sr-only">Deny</span>
