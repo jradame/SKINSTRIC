@@ -5,35 +5,31 @@ const Select = () => {
     <div className="min-h-screen bg-white relative">
       {/* Header - Responsive */}
       <div className="flex flex-row h-[64px] w-full justify-end py-3 px-4 sm:px-6 mb-3 relative z-[1000]">
-        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors h-8 sm:h-9 px-3 sm:px-4 py-2 scale-[0.7] sm:scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
+        <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-normal transition-colors h-8 sm:h-9 px-3 sm:px-4 py-2 scale-[0.7] sm:scale-[0.8] text-[#FCFCFC] text-[10px] bg-[#1A1B1C] leading-[16px]">
           ENTER CODE
         </button>
       </div>
 
-      {/* SKINSTRIC - Responsive */}
+      {/* SKINSTRIC - Keep original positioning */}
       <div className="absolute top-3 sm:top-4 left-0 px-4 sm:px-0">
         <div className="flex flex-row items-center scale-[0.6] sm:scale-[0.7] md:scale-75 origin-left">
-          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-semibold text-sm mr-2 leading-[16px] text-[#1A1B1C]">
+          <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors h-9 px-4 py-2 font-normal text-sm mr-2 leading-[16px] text-[#1A1B1C]">
             SKINSTRIC
           </span>
           <img alt="left-bracket" className="w-[4px] h-[17px]" src="/Image/left-bracket.svg" />
-          <p className="text-[#1a1b1c83] text-opacity-70 font-semibold text-sm ml-1.5 mr-1.5">INTRO</p>
+          <p className="text-[#1a1b1c83] text-opacity-70 font-normal text-sm ml-1.5 mr-1.5">INTRO</p>
           <img alt="right-bracket" className="w-[4px] h-[17px]" src="/Image/right-bracket.svg" />
         </div>
       </div>
 
       {/* Title Section - Responsive */}
-    <div className="absolute top-[60px] sm:top-[65px] left-[8px] md:left-[12px] text-left">
-  <h1 className="text-sm sm:text-base font-semibold leading-[24px] tracking-tight">A.I. ANALYSIS</h1>
-  <p className="text-xs sm:text-sm mt-1 text-gray-600 uppercase leading-[20px] sm:leading-[24px]">
-    A.I. has estimated the following.<br />
-    Fix estimated information if needed.
-  </p>
-</div>
-
-
-
-
+      <div className="absolute top-[60px] sm:top-[65px] left-[8px] md:left-[12px] text-left">
+        <h1 className="text-sm sm:text-base font-semibold leading-[24px] tracking-tight">A.I. ANALYSIS</h1>
+        <p className="text-xs sm:text-sm mt-1 text-gray-600 uppercase leading-[20px] sm:leading-[24px]">
+          A.I. has estimated the following.<br />
+          Fix estimated information if needed.
+        </p>
+      </div>
 
       {/* Main Content - Responsive */}
       <div className="min-h-[65vh] flex flex-col items-center justify-center bg-white px-4 pt-32 sm:pt-24">
