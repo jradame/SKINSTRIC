@@ -619,7 +619,7 @@ const Result = () => {
       {/* ==================== CAMERA PERMISSION POPUP - RESPONSIVE ==================== */}
       {showCameraPopup && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" onClick={handleDenyCamera} />
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
           <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none p-4">
             <div className="relative pointer-events-auto">
               <img
@@ -628,14 +628,20 @@ const Result = () => {
                 className="w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
               />
               <button
-                onClick={handleDenyCamera}
-                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-gray-400 opacity-50 cursor-pointer rounded"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDenyCamera();
+                }}
+                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
                 aria-label="Deny camera"
               >
                 <span className="sr-only">Deny</span>
               </button>
               <button
-                onClick={handleAllowCamera}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAllowCamera();
+                }}
                 className="absolute bottom-[8%] right-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
                 aria-label="Allow camera"
               >
