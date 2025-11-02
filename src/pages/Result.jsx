@@ -616,41 +616,40 @@ const Result = () => {
 
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* ==================== CAMERA PERMISSION POPUP - RESPONSIVE ==================== */}
-      {showCameraPopup && (
-        <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
-          <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none p-4">
-            <div className="relative pointer-events-auto">
-              <img
-                src="/Image/float-info.svg"
-                alt="Camera Permission"
-                className="w-auto h-auto max-w-[90vw] sm:max-w-[70vw] md:max-w-[600px]"
-              />
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDenyCamera();
-                }}
-                className="absolute bottom-[8%] left-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
-                aria-label="Deny camera"
-              >
-                <span className="sr-only">Deny</span>
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAllowCamera();
-                }}
-                className="absolute bottom-[8%] right-[15%] w-[30%] h-[12%] bg-transparent cursor-pointer"
-                aria-label="Allow camera"
-              >
-                <span className="sr-only">Allow</span>
-              </button>
-            </div>
-          </div>
-        </>
-      )}
+      {/* ==================== CAMERA PERMISSION POPUP - CUSTOM STYLED ==================== */}
+{showCameraPopup && (
+  <>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-[9998]" />
+    <div className="fixed inset-0 flex items-center justify-center z-[9999] p-4">
+      <div className="bg-[#1a1a1a] rounded-lg p-6 max-w-sm w-full mx-4 border border-gray-700">
+        <h2 className="text-base font-semibold text-white mb-3 text-center tracking-wide">
+          ALLOW A.I. TO ACCESS YOUR CAMERA
+        </h2>
+        <div className="flex gap-3 justify-center mt-6">
+          <button
+            onClick={() => {
+              setShowCameraPopup(false);
+            }}
+            className="px-8 py-2.5 bg-transparent border border-gray-500 text-gray-400 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
+          >
+            DENY
+          </button>
+          <button
+            onClick={() => {
+              handleAllowCamera();
+            }}
+            className="px-8 py-2.5 bg-white text-black rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+          >
+            ALLOW
+          </button>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+
+
 
       {/* ==================== LIVE CAMERA MODAL - RESPONSIVE ==================== */}
       {showCameraModal && (
