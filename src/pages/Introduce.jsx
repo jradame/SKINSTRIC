@@ -49,7 +49,8 @@ const Introduce = () => {
 
 
       {/* Center Content */}
-      <div className="relative flex flex-col items-center justify-center h-screen">
+      <div className="relative flex flex-col items-center justify-center h-screen -mt-12">
+
         {step < 3 && (
           <p className="text-[10px] md:text-sm text-gray-400 tracking-wider uppercase mb-1">
             CLICK TO TYPE
@@ -96,23 +97,24 @@ const Introduce = () => {
         )}
 
         {/* Spinning Diamonds */}
-        <div className="absolute inset-0 flex items-center justify-center z-0">
-          <img
-            src="/Image/diamond-large.svg"
-            alt="Diamond Large"
-            className="absolute w-[320px] h-[320px] md:w-[480px] md:h-[480px] lg:w-[762px] lg:h-[762px] animate-spin-slow"
-          />
-          <img
-            src="/Image/diamond-medium.svg"
-            alt="Diamond Medium"
-            className="absolute w-[260px] h-[260px] md:w-[400px] md:h-[400px] lg:w-[682px] lg:h-[682px] animate-spin-slower"
-          />
-          <img
-            src="/Image/diamond-small.svg"
-            alt="Diamond Small"
-            className="absolute w-[200px] h-[200px] md:w-[320px] md:h-[320px] lg:w-[602px] lg:h-[602px] animate-spin-slowest"
-          />
-        </div>
+<div className="absolute inset-0 flex items-center justify-center z-0 -mt-8">
+  <img
+    src="/Image/diamond-large.svg"
+    alt="Diamond Large"
+    className="absolute w-[320px] h-[320px] md:w-[480px] md:h-[480px] lg:w-[762px] lg:h-[762px] animate-spin-slow"
+  />
+  <img
+    src="/Image/diamond-medium.svg"
+    alt="Diamond Medium"
+    className="absolute w-[260px] h-[260px] md:w-[400px] md:h-[400px] lg:w-[682px] lg:h-[682px] animate-spin-slower"
+  />
+  <img
+    src="/Image/diamond-small.svg"
+    alt="Diamond Small"
+    className="absolute w-[200px] h-[200px] md:w-[320px] md:h-[320px] lg:w-[602px] lg:h-[602px] animate-spin-slowest"
+  />
+</div>
+
       </div>
 
       {/* Bottom Navigation */}
