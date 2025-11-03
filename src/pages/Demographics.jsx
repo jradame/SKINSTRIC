@@ -143,9 +143,9 @@ const Demographics = () => {
     <div className="min-h-screen bg-white overflow-x-hidden">
       
       {/* ==================== HEADER - RESPONSIVE ==================== */}
-<header className="flex flex-row h-[64px] min-h-[64px] max-h-[64px] w-full justify-between items-center py-5 px-4 sm:px-6 mb-3 mt-2 relative z-[1000]">
-  <div className="flex flex-row items-center scale-75 sm:scale-100">
-    <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors px-2 sm:px-4 py-2 font-normal text-xs sm:text-sm leading-[16px]">
+<header className="flex flex-row h-[64px] min-h-[64px] max-h-[64px] w-full justify-between items-center py-5 px-4 sm:px-6 mb-3 relative z-[1000]">
+  <div className="flex flex-row items-center ml-[8px]">
+    <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md transition-colors px-0 py-2 font-normal text-xs sm:text-sm leading-[16px]">
       SKINSTRIC
     </span>
     <p className="text-[#1a1b1c83] font-normal text-xs sm:text-sm ml-1 sm:ml-1.5 mr-1 sm:mr-1.5">
@@ -156,6 +156,8 @@ const Demographics = () => {
     ENTER CODE
   </button>
 </header>
+
+
 
 
 
